@@ -1,3 +1,16 @@
+-- Taucherbuddy-Zuordnung fehlt
+-- Dive > Ttauchgangsbestätigung Buddy
+-- Jeder Buddy wird in Diver gespeichert (Abfrage, ob das abgestimmt war => DSGVO)
+-- Hash-Werte für einzelne Datensätze
+-- E-Mail bei Erstellung eines Tauchers
+-- 
+-- 
+-- 
+-- 
+-- 
+
+
+
 -- --------------------------------------------------------
 --
 -- Datenbank: `edivelog`
@@ -14,7 +27,7 @@ USE `edivelog`;
 DROP TABLE IF EXISTS `Accessories`;
 CREATE TABLE `Accessories` (
   `AccessoriesID` int(11) NOT NULL,
-  `Name` varchar(100) COLLATE utf8_general_mysql500_ci NOT NULL,
+  `Accessories` varchar(100) COLLATE utf8_general_mysql500_ci NOT NULL,
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isCheckedOut` BOOLEAN DEFAULT false,
@@ -24,7 +37,7 @@ CREATE TABLE `Accessories` (
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `UpdateCount` int(11) NOT NULL  
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchzubehör';
 
 
 
@@ -37,8 +50,8 @@ CREATE TABLE `Accessories` (
 DROP TABLE IF EXISTS `Activity`;
 CREATE TABLE `Activity` (
   `ActivityID` int(11) NOT NULL,
-  `Activity` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL,
-  `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Activity` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Aktivität',
+  `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
@@ -47,7 +60,7 @@ CREATE TABLE `Activity` (
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `UpdateCount` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Aktivitäten des Tauchgangs';
 
 
 
@@ -61,9 +74,9 @@ CREATE TABLE `Activity` (
 DROP TABLE IF EXISTS `Association`;
 CREATE TABLE `Association` (
   `AssociationID` int(11) NOT NULL,
-  `Association` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `ShortAssociation` varchar(5) COLLATE utf8_general_mysql500_ci NOT NULL,
-  `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Association` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Organization',
+  `ShortAssociation` varchar(5) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Abkürzung der ORGANIZATION',
+  `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
@@ -84,8 +97,8 @@ CREATE TABLE `Association` (
 DROP TABLE IF EXISTS `Country`;
 CREATE TABLE `Country` (
   `CountryCode` int(11) NOT NULL COMMENT 'CountryCode Windows',
-  `Country` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL,
-  `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Country` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Land',
+  `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
@@ -94,7 +107,7 @@ CREATE TABLE `Country` (
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `UpdateCount` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Länder und die LänderCodes (Windows)';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Länder und die LänderCodes (Windows-orientiert)';
 
 -- --------------------------------------------------------
 
@@ -106,57 +119,34 @@ CREATE TABLE `Country` (
 DROP TABLE IF EXISTS `Dive`;
 CREATE TABLE `Dive` (
   `DiveID` int(11) NOT NULL,
-  `Diver` int(11) NOT NULL,
-  `LogID` int(11) NOT NULL,
-  `DiveDate` date NOT NULL,
-  `DiveStart` time DEFAULT NULL,
-  `DiveEnd` time DEFAULT NULL,
-  `DiveSite` int(11) NOT NULL,
-  `MaxDepth` decimal(5,2) NOT NULL,
-  `DiveTime` int(11) NOT NULL,
-  `LeadWeight` decimal(3,1) DEFAULT NULL,
-  `Suite` int(11) DEFAULT NULL,
-  `Footlets` int(11) DEFAULT NULL,
-  `Glove` int(11) DEFAULT NULL,
-  `Jacket` int(11) DEFAULT NULL,
-  `Tank` int(11) DEFAULT NULL,
-  `InitialPressure` int(11) DEFAULT NULL,
-  `DischargePressure` int(11) DEFAULT NULL,
-  `Decompression` tinyint(1) DEFAULT NULL,
-  `DecompressionRemark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Diver` int(11) NOT NULL COMMENT 'Taucher',
+  `LogBookID` int(11) NOT NULL COMMENT 'Taucherlogbuchnummer',
+  `DiveDate` date NOT NULL COMMENT 'Tauchdatum',
+  `DiveStart` time DEFAULT NULL COMMENT 'Tauchzeit Beginn',
+  `DiveEnd` time DEFAULT NULL COMMENT 'Tauchdaum Ende',
+  `DiveSite` int(11) NOT NULL COMMENT 'Tauchplatz',
+  `MaxDepth` decimal(5,2) NOT NULL COMMENT 'Maximale Tiefe des Tauchgangs',
+  `DiveTime` int(11) NOT NULL COMMENT 'Tauchzeit',
+  `LeadWeight` decimal(3,1) DEFAULT NULL COMMENT 'Gewicht Blei',
+  `Suite` int(11) DEFAULT NULL COMMENT 'Tauchanzug',
+  `Footlets` int(11) DEFAULT NULL COMMENT 'Füßlinge',
+  `Glove` int(11) DEFAULT NULL COMMENT 'Handschuhe',
+  `Jacket` int(11) DEFAULT NULL COMMENT 'Tarierjackets',
+  `Tank` int(11) DEFAULT NULL COMMENT 'Flasche',
+  `InitialPressure` int(11) DEFAULT NULL COMMENT 'Anfangsdruck der Flasche',
+  `DischargePressure` int(11) DEFAULT NULL COMMENT 'Druck der Flasche bei Beendigung des Tauchgangs',
+  `Decompression` tinyint(1) DEFAULT NULL COMMENT 'Dekompression (TRUE = Deko Stop)',
+  `DecompressionRemark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Dekompressionsbemerkung',
+  `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `isCheckedOut` BOOLEAN DEFAULT false,
-  `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `DiveActivity`
---
---
-
-DROP TABLE IF EXISTS `DiveActivity`;
-CREATE TABLE `DiveActivity` (
-  `DiveActivity` int(11) NOT NULL,
-  `Dive` int(11) NOT NULL,
-  `Activity` int(11) NOT NULL,
-  `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `isCheckedOut` BOOLEAN DEFAULT false,
-  `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
+  `isCheckedOut` BOOLEAN DEFAULT false COMMENT 'Datensatz in Bearbeitung',
+  `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Was wurde zuletzt mit dem Datensatz gemacht',
+  `isInvalid` BOOLEAN Default false COMMENT 'Ist der Datensatz ungültig',
+  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstelltimestamp des Datensatzes',
+  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updatetimestamp des Datensatzes',
+  `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Benutzer, welcher den Datensatz bearbeitet hat',
+  `UpdateCount` int(11) NOT NULL COMMENT 'Zähler, wie oft Datensatz bearbeitet wurde'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchgang eines Tauchers';
 
 -- --------------------------------------------------------
 
@@ -169,15 +159,15 @@ DROP TABLE IF EXISTS `DiveSite`;
 CREATE TABLE `DiveSite` (
   `DiveSiteID` int(11) NOT NULL,
   `Province` int(11) NOT NULL,
-  `Name` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL,
-  `OriginalName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `maxDepth` decimal(4,2) DEFAULT NULL,
-  `Entrace` enum('Boot','Ufer','Sonstiges') COLLATE utf8_general_mysql500_ci NOT NULL,
-  `WaterType` enum('Salzwasser','Süßwasser') COLLATE utf8_general_mysql500_ci NOT NULL,
-  `Ground` enum('Sand','Felsen','Koralle','Schlamm','Sonstiges') COLLATE utf8_general_mysql500_ci NOT NULL,
+  `Name` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Tauchplatzname Deutsch',
+  `OriginalName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Tauchplatzname Original',
+  `maxDepth` decimal(4,2) DEFAULT NULL COMMENT 'Maximale Tiefe des Tauchplatzes',
+  `Entrace` enum('Boot','Ufer','Sonstiges') COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Eingangstyp',
+  `WaterType` enum('Salzwasser','Süßwasser') COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Wassertyp',
+  `Ground` enum('Sand','Felsen','Koralle','Schlamm','Sonstiges') COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Grund',
   `Remarks` text COLLATE utf8_general_mysql500_ci,
-  `FileLocation` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Location from file if exists',
-  `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `FileLocation` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Tauchplatzbild (Karte)',
+  `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
@@ -197,16 +187,16 @@ CREATE TABLE `DiveSite` (
 
 DROP TABLE IF EXISTS `Diver`;
 CREATE TABLE `Diver` (
-  `DiverID` int(11) NOT NULL,
-  `Lastname` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `Firstname` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL,
-  `Birth` date DEFAULT NULL,
-  `Street` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `Housenumber` char(8) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `Postcode` char(10) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `Location` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `Country` int(11) NOT NULL,
-  `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `DiverID` int(11) NOT NULL COMMENT 'TaucherID',
+  `Lastname` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Nachname',
+  `Firstname` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Vorname',
+  `Birth` date DEFAULT NULL COMMENT 'Geburtsdatum',
+  `Street` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Straße',
+  `Housenumber` char(8) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Hausnummer',
+  `Postcode` char(10) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Postleitzahl (PLZ)',
+  `Location` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Ort',
+  `Country` int(11) NOT NULL COMMENT 'FK: Land',
+  `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
@@ -215,7 +205,7 @@ CREATE TABLE `Diver` (
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `UpdateCount` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Taucherinformationen';
 
 -- --------------------------------------------------------
 
@@ -229,7 +219,7 @@ CREATE TABLE `DiverQualification` (
   `DiverQualificationID` int(11) NOT NULL,
   `Diver` int(11) NOT NULL,
   `Qualification` int(11) NOT NULL,
-  `IssueDate` date NOT NULL COMMENT 'Austelldatum',
+  `IssueDate` date NOT NULL COMMENT 'Austelldatum der Qualifikation',
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isCheckedOut` BOOLEAN DEFAULT false,
@@ -239,7 +229,7 @@ CREATE TABLE `DiverQualification` (
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `UpdateCount` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Qualifikationen eines Tauchers';
 
 -- --------------------------------------------------------
 
@@ -261,7 +251,7 @@ CREATE TABLE `Footlets` (
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `UpdateCount` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Füßlinge';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Zubehör: Füßlinge';
 
 -- --------------------------------------------------------
 
@@ -282,7 +272,7 @@ CREATE TABLE `Gloves` (
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `UpdateCount` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Handschuhe';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Zubehör: Handschuhe';
 
 -- --------------------------------------------------------
 
@@ -332,7 +322,7 @@ CREATE TABLE `MedicalCertificate` (
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `UpdateCount` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchtauglichkeitsuntersuchung';
 
 
 -- --------------------------------------------------------
@@ -357,7 +347,7 @@ CREATE TABLE `Province` (
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `UpdateCount` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Bundesländer/Provinzen der einzelnen Staaten';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Bundesländer/Provinzen der einzelnen Countries';
 
 -- --------------------------------------------------------
 
@@ -380,7 +370,7 @@ CREATE TABLE `Qualification` (
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `UpdateCount` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Qualifikationsübersicht';
 
 
 -- --------------------------------------------------------
@@ -424,7 +414,7 @@ CREATE TABLE `TankType` (
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `UpdateCount` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchflaschenmaterialeigenschaften';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Material, aus dem die Tauchflasche besteht';
 
 
 -- --------------------------------------------------------
@@ -485,7 +475,7 @@ ALTER TABLE `Country`
 --
 ALTER TABLE `Dive`
   ADD PRIMARY KEY (`DiveID`),
-  ADD KEY `Diver` (`Diver`,`LogID`),
+  ADD KEY `Diver` (`Diver`,`LogBookID`ID`),
   ADD KEY `Footlets` (`Footlets`,`Glove`,`Jacket`,`Suite`,`Tank`),
   ADD KEY `Glove` (`Glove`),
   ADD KEY `Jacket` (`Jacket`),
