@@ -1,31 +1,30 @@
+/*
+ * Project:		RESTService
+ * Package:		edivelog.service.entity
+ * File: 		Association.java
+ *
+ * Created:		Sep 5, 2018
+ * Author:		amondruffel (Sophos Technology GmbH)
+ * Copyright:	(C) 2018 Sophos Technology GmbH
+ */
 package edivelog.service.entity;
 
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
-/**
- * @author amondruffel
- *
- *Entity class representing the Activity Entity in a MySQL Database
- *
- */
-@Entity
-@Table(name = "Accessories")
-public class Accessories
+public class Association
 {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer accessoriesID;
+    private Integer associationID;
     
-    @Column(name = "Accessories", length = 100, nullable=false)
-    private String accessories;
+    @Column(name = "Association", length = 100, nullable=false)
+    private String association;
     
     @Column(name = "Description", length = 255, nullable=true)
     private String description;
@@ -54,33 +53,33 @@ public class Accessories
     @Column(name = "UpdateCount", length = 11, nullable=false)
     private int updateCount;
     
-    protected Accessories() {}
+    protected Association() {}
     
-    public Accessories(String accessories, Date timeCreate, int updateCount)
+    public Association(String association, Date timeCreate, int updateCount)
     {
-        this.accessories = accessories;
+        this.association = association;
         this.timeCreate = timeCreate;
         this.updateCount = updateCount;
     }
     
-    public Integer getAccessoriesID()
+    public Integer getAssociationID()
     {
-        return accessoriesID;
+        return associationID;
     }
 
-    public void setAccessoriesID(Integer accessoriesID)
+    public void setAsscociationID(Integer associationID)
     {
-        this.accessoriesID = accessoriesID;
+        this.associationID = associationID;
     }
 
-    public String getAccessories()
+    public String getAssociation()
     {
-        return accessories;
+        return association;
     }
 
-    public void setAccessories(String accessories)
+    public void setAssociation(String association)
     {
-        this.accessories = accessories;
+        this.association = association;
     }
 
     public String getDescription()

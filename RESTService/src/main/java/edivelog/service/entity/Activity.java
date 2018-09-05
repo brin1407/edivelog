@@ -16,16 +16,16 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "Accessories")
-public class Accessories
+@Table(name = "Activity")
+public class Activity
 {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer accessoriesID;
+    private Integer activityID;
     
-    @Column(name = "Accessories", length = 100, nullable=false)
-    private String accessories;
+    @Column(name = "Activity", length = 100, nullable=false)
+    private String activity;
     
     @Column(name = "Description", length = 255, nullable=true)
     private String description;
@@ -54,33 +54,33 @@ public class Accessories
     @Column(name = "UpdateCount", length = 11, nullable=false)
     private int updateCount;
     
-    protected Accessories() {}
+    protected Activity() {}
     
-    public Accessories(String accessories, Date timeCreate, int updateCount)
+    public Activity(String activity, Date timeCreate, int updateCount)
     {
-        this.accessories = accessories;
+        this.activity = activity;
         this.timeCreate = timeCreate;
         this.updateCount = updateCount;
     }
     
-    public Integer getAccessoriesID()
+    public Integer getActivityID()
     {
-        return accessoriesID;
+        return activityID;
     }
 
-    public void setAccessoriesID(Integer accessoriesID)
+    public void setActivityID(Integer activityID)
     {
-        this.accessoriesID = accessoriesID;
+        this.activityID = activityID;
     }
 
-    public String getAccessories()
+    public String getActivity()
     {
-        return accessories;
+        return activity;
     }
 
-    public void setAccessories(String accessories)
+    public void setActivity(String activity)
     {
-        this.accessories = accessories;
+        this.activity = activity;
     }
 
     public String getDescription()
