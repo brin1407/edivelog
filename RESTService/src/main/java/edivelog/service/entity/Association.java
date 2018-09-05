@@ -16,6 +16,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * <b>Description:</b><br>
+ * 
+ *
+  *Entity class representing the Association Entity in a MySQL Database
+ */
 public class Association
 {
 
