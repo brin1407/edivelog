@@ -118,7 +118,7 @@ CREATE TABLE `Country` (
 
 DROP TABLE IF EXISTS `Dive`;
 CREATE TABLE `Dive` (
-  `DiveID` int(11) NOT NULL,
+  `DiveID` int(11) PRIMARY KEY NOT NULL,
   `Diver` int(11) NOT NULL COMMENT 'Taucher',
   `LogBookID` int(11) NOT NULL COMMENT 'Taucherlogbuchnummer',
   `DiveDate` date NOT NULL COMMENT 'Tauchdatum',
@@ -456,7 +456,8 @@ ALTER TABLE `Accessories`
 -- Indizes für die Tabelle `Activity`
 --
 ALTER TABLE `Activity`
-  ADD PRIMARY KEY (`ActivityID`);
+  ADD PRIMARY KEY (`ActivityID`),
+  ADD KEY `Activity` (`Activity`);
 
 --
 -- Indizes für die Tabelle `Association`
@@ -470,26 +471,6 @@ ALTER TABLE `Association`
 ALTER TABLE `Country`
   ADD PRIMARY KEY (`CountryCode`);
 
---
--- Indizes für die Tabelle `Dive`
---
-ALTER TABLE `Dive`
-  ADD PRIMARY KEY (`DiveID`),
-  ADD KEY `Diver` (`Diver`,`LogBookID`ID`),
-  ADD KEY `Footlets` (`Footlets`,`Glove`,`Jacket`,`Suite`,`Tank`),
-  ADD KEY `Glove` (`Glove`),
-  ADD KEY `Jacket` (`Jacket`),
-  ADD KEY `Suite` (`Suite`),
-  ADD KEY `Tank` (`Tank`),
-  ADD KEY `DiveSite` (`DiveSite`);
-
---
--- Indizes für die Tabelle `DiveActivity`
---
-ALTER TABLE `DiveActivity`
-  ADD PRIMARY KEY (`DiveActivity`),
-  ADD UNIQUE KEY `Dive` (`Dive`,`Activity`),
-  ADD KEY `Activity` (`Activity`);
 
 --
 -- Indizes für die Tabelle `DiveSite`
@@ -575,6 +556,20 @@ ALTER TABLE `Tanks`
   ADD UNIQUE KEY `Remark` (`Remark`,`Size`,`TankType`),
   ADD KEY `TankType` (`TankType`);
 
+
+--
+-- ADD FOREIGN KEYS for Dive
+--
+ALTER TABLE `Dive`
+  ADD KEY `Diver` (`Diver`,`LogBookID`),
+  ADD KEY `Footlets` (`Footlets`),
+  ADD KEY `Glove` (`Glove`),
+  ADD KEY `Jacket` (`Jacket`),
+  ADD KEY `Suite` (`Suite`),
+  ADD KEY `Tank` (`Tank`),
+  ADD KEY `DiveSite` (`DiveSite`);
+
+
 --
 -- AUTO_INCREMENT für exportierte Tabellen
 --
@@ -600,10 +595,10 @@ ALTER TABLE `Association`
 ALTER TABLE `Dive`
   MODIFY `DiveID` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT für Tabelle `DiveActivity`
+-- AUTO_INCREMENT für Tabelle `Activity`
 --
-ALTER TABLE `DiveActivity`
-  MODIFY `DiveActivity` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `Activity`
+  MODIFY `ActivityID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `DiveSite`
 --
@@ -679,13 +674,6 @@ ALTER TABLE `Dive`
   ADD CONSTRAINT `Dive_ibfk_5` FOREIGN KEY (`Suite`) REFERENCES `Suite` (`SuiteID`),
   ADD CONSTRAINT `Dive_ibfk_6` FOREIGN KEY (`Tank`) REFERENCES `Tanks` (`TanksID`),
   ADD CONSTRAINT `Dive_ibfk_7` FOREIGN KEY (`DiveSite`) REFERENCES `DiveSite` (`DiveSiteID`);
-
---
--- Constraints der Tabelle `DiveActivity`
---
-ALTER TABLE `DiveActivity`
-  ADD CONSTRAINT `DiveActivity_ibfk_1` FOREIGN KEY (`Dive`) REFERENCES `Dive` (`DiveID`),
-  ADD CONSTRAINT `DiveActivity_ibfk_2` FOREIGN KEY (`Activity`) REFERENCES `Activity` (`ActivityID`);
 
 --
 -- Constraints der Tabelle `DiveSite`
