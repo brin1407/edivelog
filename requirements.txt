@@ -1,0 +1,17 @@
+1.
+    Ein Taucher kann mehrere Qualifikationen besitzten. Jedoch soll zu historisch gesehen, die Qualifikation angezeigt werden, die der Taucher zu diesem Zeitpunkt bessesen hat.
+    Beispiel: Taucher 1 hat Qualifikation A am 2000-01-01 gemacht und hat 2001-01-01 Qualifikation B gemacht.
+                Zwischendurch hat der Taucher 1 3 Tauchgänge mit Taucher B gemacht. Dabei hatte der Taucher 1 die Qualifikation A.
+
+2.
+    Es soll ein Upload von Bildern möglich sein. Diese Bilder sollen in verschiedene Verzeichnisse eingefügt werden.
+    Es sollen Verzeichnisse erstellt werden, wenn diese nicht vorhanden sind. Folgende Bildformate sind möglich: PNG, JPEG und TIFF
+    Tauchplatzbilder (Skizzierte Darstellung der Tauchplätze) sollen in das Verzeichnis: "divesite"
+
+3.
+    Es soll ein Service bereitgestellt werden, der alle Daten, über den angemeldeten Benutzer bereitgestellt.
+        - Taucherinformationen
+        - MedicalCertificate History
+        - Besuchte Tauchplätze (mit Loginformationen ["... Logbucheintrag Nr. x,y,z,..."])
+        - Tauchgänge (Logbucheintrag)
+        - ...
