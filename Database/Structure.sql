@@ -1,14 +1,9 @@
+-- Was fehlt noch in der Datenbank:
 -- Taucherbuddy-Zuordnung fehlt
 -- Dive > Ttauchgangsbestätigung Buddy
 -- Jeder Buddy wird in Diver gespeichert (Abfrage, ob das abgestimmt war => DSGVO)
 -- Hash-Werte für einzelne Datensätze
 -- E-Mail bei Erstellung eines Tauchers
--- 
--- 
--- 
--- 
--- 
-
 
 
 -- --------------------------------------------------------
@@ -26,7 +21,7 @@ USE `edivelog`;
 
 DROP TABLE IF EXISTS `Accessories`;
 CREATE TABLE `Accessories` (
-  `AccessoriesID` int(11) NOT NULL,
+  `AccessoriesID` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `Accessories` varchar(100) COLLATE utf8_general_mysql500_ci NOT NULL,
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
@@ -36,7 +31,7 @@ CREATE TABLE `Accessories` (
   `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) NOT NULL  
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchzubehör';
 
 
@@ -49,7 +44,7 @@ CREATE TABLE `Accessories` (
 
 DROP TABLE IF EXISTS `Activity`;
 CREATE TABLE `Activity` (
-  `ActivityID` int(11) NOT NULL,
+  `ActivityID` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `Activity` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Aktivität',
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
@@ -59,7 +54,7 @@ CREATE TABLE `Activity` (
   `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) NOT NULL
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Aktivitäten des Tauchgangs';
 
 
@@ -73,7 +68,7 @@ CREATE TABLE `Activity` (
 
 DROP TABLE IF EXISTS `Association`;
 CREATE TABLE `Association` (
-  `AssociationID` int(11) NOT NULL,
+  `AssociationID` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `Association` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Organization',
   `ShortAssociation` varchar(5) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Abkürzung der ORGANIZATION',
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
@@ -84,7 +79,7 @@ CREATE TABLE `Association` (
   `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) NOT NULL
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Verbände der Sporttaucher';
 
 -- --------------------------------------------------------
@@ -96,7 +91,7 @@ CREATE TABLE `Association` (
 
 DROP TABLE IF EXISTS `Country`;
 CREATE TABLE `Country` (
-  `CountryCode` int(11) NOT NULL COMMENT 'CountryCode Windows',
+  `CountryCode` int(11) NOT NULL PRIMARY KEY COMMENT 'CountryCode Windows',
   `Country` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Land',
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
@@ -106,7 +101,7 @@ CREATE TABLE `Country` (
   `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) NOT NULL
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Länder und die LänderCodes (Windows-orientiert)';
 
 -- --------------------------------------------------------
@@ -118,7 +113,7 @@ CREATE TABLE `Country` (
 
 DROP TABLE IF EXISTS `Dive`;
 CREATE TABLE `Dive` (
-  `DiveID` int(11) PRIMARY KEY NOT NULL,
+  `DiveID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `Diver` int(11) NOT NULL COMMENT 'Taucher',
   `LogBookID` int(11) NOT NULL COMMENT 'Taucherlogbuchnummer',
   `DiveDate` date NOT NULL COMMENT 'Tauchdatum',
@@ -145,7 +140,7 @@ CREATE TABLE `Dive` (
   `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstelltimestamp des Datensatzes',
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updatetimestamp des Datensatzes',
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Benutzer, welcher den Datensatz bearbeitet hat',
-  `UpdateCount` int(11) NOT NULL COMMENT 'Zähler, wie oft Datensatz bearbeitet wurde'
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL   COMMENT 'Zähler, wie oft Datensatz bearbeitet wurde'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchgang eines Tauchers';
 
 -- --------------------------------------------------------
@@ -157,7 +152,7 @@ CREATE TABLE `Dive` (
 
 DROP TABLE IF EXISTS `DiveSite`;
 CREATE TABLE `DiveSite` (
-  `DiveSiteID` int(11) NOT NULL,
+  `DiveSiteID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `Province` int(11) NOT NULL,
   `Name` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Tauchplatzname Deutsch',
   `OriginalName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Tauchplatzname Original',
@@ -175,7 +170,7 @@ CREATE TABLE `DiveSite` (
   `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) NOT NULL
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchplätze';
 
 -- --------------------------------------------------------
@@ -187,9 +182,10 @@ CREATE TABLE `DiveSite` (
 
 DROP TABLE IF EXISTS `Diver`;
 CREATE TABLE `Diver` (
-  `DiverID` int(11) NOT NULL COMMENT 'TaucherID',
+  `DiverID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'TaucherID',
   `Lastname` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Nachname',
   `Firstname` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Vorname',
+  `Username` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Benutzername',
   `Birth` date DEFAULT NULL COMMENT 'Geburtsdatum',
   `Street` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Straße',
   `Housenumber` char(8) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Hausnummer',
@@ -204,7 +200,7 @@ CREATE TABLE `Diver` (
   `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) NOT NULL
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Taucherinformationen';
 
 -- --------------------------------------------------------
@@ -216,7 +212,7 @@ CREATE TABLE `Diver` (
 
 DROP TABLE IF EXISTS `DiverQualification`;
 CREATE TABLE `DiverQualification` (
-  `DiverQualificationID` int(11) NOT NULL,
+  `DiverQualificationID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `Diver` int(11) NOT NULL,
   `Qualification` int(11) NOT NULL,
   `IssueDate` date NOT NULL COMMENT 'Austelldatum der Qualifikation',
@@ -228,7 +224,7 @@ CREATE TABLE `DiverQualification` (
   `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) NOT NULL
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Qualifikationen eines Tauchers';
 
 -- --------------------------------------------------------
@@ -240,7 +236,7 @@ CREATE TABLE `DiverQualification` (
 
 DROP TABLE IF EXISTS `Footlets`;
 CREATE TABLE `Footlets` (
-  `FootletID` int(11) NOT NULL,
+  `FootletID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `Zipper` tinyint(1) DEFAULT NULL,
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
@@ -250,7 +246,7 @@ CREATE TABLE `Footlets` (
   `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) NOT NULL
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Zubehör: Füßlinge';
 
 -- --------------------------------------------------------
@@ -262,7 +258,7 @@ CREATE TABLE `Footlets` (
 
 DROP TABLE IF EXISTS `Gloves`;
 CREATE TABLE `Gloves` (
-  `GlovesID` int(11) NOT NULL,
+  `GlovesID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isCheckedOut` BOOLEAN DEFAULT false,
@@ -271,7 +267,7 @@ CREATE TABLE `Gloves` (
   `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) NOT NULL
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Zubehör: Handschuhe';
 
 -- --------------------------------------------------------
@@ -283,7 +279,7 @@ CREATE TABLE `Gloves` (
 
 DROP TABLE IF EXISTS `Jacket`;
 CREATE TABLE `Jacket` (
-  `JacketID` int(11) NOT NULL,
+  `JacketID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `Jacket` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL,
   `Image` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
@@ -294,7 +290,7 @@ CREATE TABLE `Jacket` (
   `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) NOT NULL
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tarierjackets';
 
 -- --------------------------------------------------------
@@ -306,7 +302,7 @@ CREATE TABLE `Jacket` (
 
 DROP TABLE IF EXISTS `MedicalCertificate`;
 CREATE TABLE `MedicalCertificate` (
-  `CertificatID` int(11) NOT NULL,
+  `CertificatID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `DiverID` int(11) NOT NULL,
   `Limitations` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `IssueDate` date NOT NULL COMMENT 'Ausstelldatum der Urkunde',
@@ -321,7 +317,7 @@ CREATE TABLE `MedicalCertificate` (
   `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) NOT NULL
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchtauglichkeitsuntersuchung';
 
 
@@ -334,7 +330,7 @@ CREATE TABLE `MedicalCertificate` (
 
 DROP TABLE IF EXISTS `Province`;
 CREATE TABLE `Province` (
-  `ProvinceID` int(11) NOT NULL,
+  `ProvinceID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `CountryCode` int(11) NOT NULL,
   `Province` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL,
   `OriginalProvinceName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
@@ -346,7 +342,7 @@ CREATE TABLE `Province` (
   `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) NOT NULL
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Bundesländer/Provinzen der einzelnen Countries';
 
 -- --------------------------------------------------------
@@ -358,7 +354,7 @@ CREATE TABLE `Province` (
 
 DROP TABLE IF EXISTS `Qualification`;
 CREATE TABLE `Qualification` (
-  `QualificationID` int(11) NOT NULL,
+  `QualificationID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `Qualification` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL,
   `Association` int(11) NOT NULL,
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
@@ -369,7 +365,7 @@ CREATE TABLE `Qualification` (
   `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) NOT NULL
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Qualifikationsübersicht';
 
 
@@ -382,7 +378,7 @@ CREATE TABLE `Qualification` (
 
 DROP TABLE IF EXISTS `Suite`;
 CREATE TABLE `Suite` (
-  `SuiteID` int(11) NOT NULL,
+  `SuiteID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isCheckedOut` BOOLEAN DEFAULT false,
@@ -391,7 +387,7 @@ CREATE TABLE `Suite` (
   `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) NOT NULL
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchanzüge';
 
 -- --------------------------------------------------------
@@ -403,7 +399,7 @@ CREATE TABLE `Suite` (
 
 DROP TABLE IF EXISTS `TankType`;
 CREATE TABLE `TankType` (
-  `TankTypeID` int(11) NOT NULL,
+  `TankTypeID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `TankType` varchar(80) COLLATE utf8_general_mysql500_ci NOT NULL,
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
@@ -413,7 +409,7 @@ CREATE TABLE `TankType` (
   `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) NOT NULL
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Material, aus dem die Tauchflasche besteht';
 
 
@@ -426,7 +422,7 @@ CREATE TABLE `TankType` (
 
 DROP TABLE IF EXISTS `Tanks`;
 CREATE TABLE `Tanks` (
-  `TanksID` int(11) NOT NULL,
+  `TanksID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `Pressure` float(5,2) NOT NULL,
   `Size` float(4,1) NOT NULL,
   `TankType` int(11) NOT NULL,
@@ -438,7 +434,7 @@ CREATE TABLE `Tanks` (
   `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) NOT NULL
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchflaschen';
 
 
@@ -447,36 +443,16 @@ CREATE TABLE `Tanks` (
 --
 
 --
--- Indizes für die Tabelle `Accessories`
---
-ALTER TABLE `Accessories`
-  ADD PRIMARY KEY (`AccessoriesID`);
-
---
 -- Indizes für die Tabelle `Activity`
 --
 ALTER TABLE `Activity`
-  ADD PRIMARY KEY (`ActivityID`),
   ADD KEY `Activity` (`Activity`);
-
---
--- Indizes für die Tabelle `Association`
---
-ALTER TABLE `Association`
-  ADD PRIMARY KEY (`AssociationID`);
-
---
--- Indizes für die Tabelle `Country`
---
-ALTER TABLE `Country`
-  ADD PRIMARY KEY (`CountryCode`);
 
 
 --
 -- Indizes für die Tabelle `DiveSite`
 --
 ALTER TABLE `DiveSite`
-  ADD PRIMARY KEY (`DiveSiteID`),
   ADD KEY `Country` (`Province`),
   ADD KEY `Entrace` (`Entrace`,`WaterType`,`Ground`);
 
@@ -484,75 +460,55 @@ ALTER TABLE `DiveSite`
 -- Indizes für die Tabelle `Diver`
 --
 ALTER TABLE `Diver`
-  ADD PRIMARY KEY (`DiverID`),
-  ADD KEY `Country` (`Country`);
+  ADD KEY `Country` (`Country`),
+  ADD UNIQUE KEY `Username` (`Username`);
 
 --
 -- Indizes für die Tabelle `DiverQualification`
 --
 ALTER TABLE `DiverQualification`
-  ADD PRIMARY KEY (`DiverQualificationID`),
   ADD UNIQUE KEY `Diver` (`Diver`,`Qualification`);
 
 --
 -- Indizes für die Tabelle `Footlets`
 --
 ALTER TABLE `Footlets`
-  ADD PRIMARY KEY (`FootletID`),
   ADD UNIQUE KEY `Remark` (`Remark`);
 
 --
 -- Indizes für die Tabelle `Gloves`
 --
 ALTER TABLE `Gloves`
-  ADD PRIMARY KEY (`GlovesID`),
   ADD UNIQUE KEY `Remark` (`Remark`);
-
---
--- Indizes für die Tabelle `Jacket`
---
-ALTER TABLE `Jacket`
-  ADD PRIMARY KEY (`JacketID`);
 
 --
 -- Indizes für die Tabelle `MedicalCertificate`
 --
 ALTER TABLE `MedicalCertificate`
-  ADD PRIMARY KEY (`CertificatID`),
   ADD KEY `DiverID` (`DiverID`);
 
 --
 -- Indizes für die Tabelle `Province`
 --
 ALTER TABLE `Province`
-  ADD PRIMARY KEY (`ProvinceID`),
   ADD KEY `CountryID` (`CountryCode`);
 
 --
 -- Indizes für die Tabelle `Qualification`
 --
 ALTER TABLE `Qualification`
-  ADD PRIMARY KEY (`QualificationID`),
   ADD KEY `Association` (`Association`);
 
 --
 -- Indizes für die Tabelle `Suite`
 --
 ALTER TABLE `Suite`
-  ADD PRIMARY KEY (`SuiteID`),
   ADD UNIQUE KEY `Remark` (`Remark`);
-
---
--- Indizes für die Tabelle `TankType`
---
-ALTER TABLE `TankType`
-  ADD PRIMARY KEY (`TankTypeID`);
 
 --
 -- Indizes für die Tabelle `Tanks`
 --
 ALTER TABLE `Tanks`
-  ADD PRIMARY KEY (`TanksID`),
   ADD UNIQUE KEY `Remark` (`Remark`,`Size`,`TankType`),
   ADD KEY `TankType` (`TankType`);
 
@@ -571,99 +527,6 @@ ALTER TABLE `Dive`
 
 
 --
--- AUTO_INCREMENT für exportierte Tabellen
---
-
---
--- AUTO_INCREMENT für Tabelle `Accessories`
---
-ALTER TABLE `Accessories`
-  MODIFY `AccessoriesID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `Activity`
---
-ALTER TABLE `Activity`
-  MODIFY `ActivityID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `Association`
---
-ALTER TABLE `Association`
-  MODIFY `AssociationID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `Dive`
---
-ALTER TABLE `Dive`
-  MODIFY `DiveID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `Activity`
---
-ALTER TABLE `Activity`
-  MODIFY `ActivityID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `DiveSite`
---
-ALTER TABLE `DiveSite`
-  MODIFY `DiveSiteID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `Diver`
---
-ALTER TABLE `Diver`
-  MODIFY `DiverID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `DiverQualification`
---
-ALTER TABLE `DiverQualification`
-  MODIFY `DiverQualificationID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `Footlets`
---
-ALTER TABLE `Footlets`
-  MODIFY `FootletID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `Gloves`
---
-ALTER TABLE `Gloves`
-  MODIFY `GlovesID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `Jacket`
---
-ALTER TABLE `Jacket`
-  MODIFY `JacketID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `MedicalCertificate`
---
-ALTER TABLE `MedicalCertificate`
-  MODIFY `CertificatID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `Province`
---
-ALTER TABLE `Province`
-  MODIFY `ProvinceID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `Qualification`
---
-ALTER TABLE `Qualification`
-  MODIFY `QualificationID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `Suite`
---
-ALTER TABLE `Suite`
-  MODIFY `SuiteID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `TankType`
---
-ALTER TABLE `TankType`
-  MODIFY `TankTypeID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `Tanks`
---
-ALTER TABLE `Tanks`
-  MODIFY `TanksID` int(11) NOT NULL AUTO_INCREMENT;
---
--- Constraints der exportierten Tabellen
---
-
---
 -- Constraints der Tabelle `Dive`
 --
 ALTER TABLE `Dive`
@@ -680,6 +543,13 @@ ALTER TABLE `Dive`
 --
 ALTER TABLE `DiveSite`
   ADD CONSTRAINT `DiveSite_ibfk_1` FOREIGN KEY (`Province`) REFERENCES `Province` (`ProvinceID`);
+
+--
+-- Constraints der Tabelle `DiverQualification`
+--
+ALTER TABLE `DiverQualification`
+  ADD CONSTRAINT `DiverQualification_ibfk_1` FOREIGN KEY (`Diver`) REFERENCES `Diver` (`DiverID`),
+  ADD CONSTRAINT `DiverQualification_ibfk_2` FOREIGN KEY (`Qualification`) REFERENCES `Qualification` (`QualificationID`);
 
 --
 -- Constraints der Tabelle `Diver`
