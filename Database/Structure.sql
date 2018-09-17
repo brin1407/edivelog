@@ -91,8 +91,9 @@ CREATE TABLE `Association` (
 
 DROP TABLE IF EXISTS `Country`;
 CREATE TABLE `Country` (
-  `CountryCode` int(11) NOT NULL PRIMARY KEY COMMENT 'CountryCode Windows',
+  `CountryCode` int(11) NOT NULL PRIMARY KEY COMMENT 'CountryCode',
   `Country` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Land',
+  `ISO3166` CHAR(3) NOT NULL,
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isCheckedOut` BOOLEAN DEFAULT false,
@@ -102,7 +103,7 @@ CREATE TABLE `Country` (
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Länder und die LänderCodes (Windows-orientiert)';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Länder und LänderCodes';
 
 -- --------------------------------------------------------
 
@@ -447,6 +448,12 @@ CREATE TABLE `Tanks` (
 --
 ALTER TABLE `Activity`
   ADD KEY `Activity` (`Activity`);
+
+--
+-- Indizes für die Tabelle `Country`
+--
+ALTER TABLE `Country`
+  ADD UNIQUE KEY `ISO3166` (`ISO3166`);
 
 
 --
