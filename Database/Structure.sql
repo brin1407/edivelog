@@ -91,7 +91,7 @@ CREATE TABLE `Association` (
 
 DROP TABLE IF EXISTS `Country`;
 CREATE TABLE `Country` (
-  `CountryCode` int(11) NOT NULL PRIMARY KEY COMMENT 'CountryCode',
+  `CountryCode` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'CountryCode',
   `Country` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Land',
   `ISO3166` CHAR(3) NOT NULL,
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
