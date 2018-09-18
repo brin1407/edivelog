@@ -135,6 +135,7 @@ CREATE TABLE `Dive` (
   `DecompressionRemark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Dekompressionsbemerkung',
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `isApproved` BOOLEAN DEFAULT FALSE COMMENT 'Dekompression (TRUE = Bestätigt)',
   `isCheckedOut` BOOLEAN DEFAULT false COMMENT 'Datensatz in Bearbeitung',
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Was wurde zuletzt mit dem Datensatz gemacht',
   `isInvalid` BOOLEAN Default false COMMENT 'Ist der Datensatz ungültig',
