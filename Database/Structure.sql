@@ -116,7 +116,7 @@ DROP TABLE IF EXISTS `Dive`;
 CREATE TABLE `Dive` (
   `DiveID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `Diver` int(11) NOT NULL COMMENT 'Taucher',
-  `LogBookID` int(11) NOT NULL COMMENT 'Taucherlogbuchnummer',
+  `LogBookID` int(11) NOT NULL COMMENT 'Tauchgangsnummer',
   `DiveDate` date NOT NULL COMMENT 'Tauchdatum',
   `DiveStart` time DEFAULT NULL COMMENT 'Tauchzeit Beginn',
   `DiveEnd` time DEFAULT NULL COMMENT 'Tauchdaum Ende',
