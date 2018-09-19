@@ -2,34 +2,42 @@ package edivelog.service.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.Date;
 import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the activity database table.
+ * The persistent class for the diverqualification database table.
  * 
  */
 @Entity
-@Table(name="activity")
-@NamedQuery(name="Activity.findAll", query="SELECT a FROM Activity a")
-public class Activity implements Serializable {
+@Table(name="diverqualification")
+@NamedQuery(name="Diverqualification.findAll", query="SELECT d FROM Diverqualification d")
+public class Diverqualification implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(length=255)
 	private String action;
 
-	@Column(nullable=false, length=255)
-	private String activity;
-
-	@Column(nullable=false)
-	private int activityID;
-
 	@Column(length=255)
 	private String description;
+
+	@Column(nullable=false)
+	private int diver;
+
+	@Column(nullable=false)
+	private int diverQualificationID;
 
 	private byte isCheckedOut;
 
 	private byte isInvalid;
+
+	@Temporal(TemporalType.DATE)
+	@Column(nullable=false)
+	private Date issueDate;
+
+	@Column(nullable=false)
+	private int qualification;
 
 	@Column(length=255)
 	private String remark;
@@ -45,7 +53,7 @@ public class Activity implements Serializable {
 	@Column(length=255)
 	private String updatedUser;
 
-	public Activity() {
+	public Diverqualification() {
 	}
 
 	public String getAction() {
@@ -56,28 +64,28 @@ public class Activity implements Serializable {
 		this.action = action;
 	}
 
-	public String getActivity() {
-		return this.activity;
-	}
-
-	public void setActivity(String activity) {
-		this.activity = activity;
-	}
-
-	public int getActivityID() {
-		return this.activityID;
-	}
-
-	public void setActivityID(int activityID) {
-		this.activityID = activityID;
-	}
-
 	public String getDescription() {
 		return this.description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getDiver() {
+		return this.diver;
+	}
+
+	public void setDiver(int diver) {
+		this.diver = diver;
+	}
+
+	public int getDiverQualificationID() {
+		return this.diverQualificationID;
+	}
+
+	public void setDiverQualificationID(int diverQualificationID) {
+		this.diverQualificationID = diverQualificationID;
 	}
 
 	public byte getIsCheckedOut() {
@@ -94,6 +102,22 @@ public class Activity implements Serializable {
 
 	public void setIsInvalid(byte isInvalid) {
 		this.isInvalid = isInvalid;
+	}
+
+	public Date getIssueDate() {
+		return this.issueDate;
+	}
+
+	public void setIssueDate(Date issueDate) {
+		this.issueDate = issueDate;
+	}
+
+	public int getQualification() {
+		return this.qualification;
+	}
+
+	public void setQualification(int qualification) {
+		this.qualification = qualification;
 	}
 
 	public String getRemark() {

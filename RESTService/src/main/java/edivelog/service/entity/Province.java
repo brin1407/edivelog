@@ -6,23 +6,20 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the activity database table.
+ * The persistent class for the province database table.
  * 
  */
 @Entity
-@Table(name="activity")
-@NamedQuery(name="Activity.findAll", query="SELECT a FROM Activity a")
-public class Activity implements Serializable {
+@Table(name="province")
+@NamedQuery(name="Province.findAll", query="SELECT p FROM Province p")
+public class Province implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(length=255)
 	private String action;
 
-	@Column(nullable=false, length=255)
-	private String activity;
-
 	@Column(nullable=false)
-	private int activityID;
+	private int countryCode;
 
 	@Column(length=255)
 	private String description;
@@ -30,6 +27,15 @@ public class Activity implements Serializable {
 	private byte isCheckedOut;
 
 	private byte isInvalid;
+
+	@Column(length=255)
+	private String originalProvinceName;
+
+	@Column(nullable=false, length=255)
+	private String province;
+
+	@Column(nullable=false)
+	private int provinceID;
 
 	@Column(length=255)
 	private String remark;
@@ -45,7 +51,7 @@ public class Activity implements Serializable {
 	@Column(length=255)
 	private String updatedUser;
 
-	public Activity() {
+	public Province() {
 	}
 
 	public String getAction() {
@@ -56,20 +62,12 @@ public class Activity implements Serializable {
 		this.action = action;
 	}
 
-	public String getActivity() {
-		return this.activity;
+	public int getCountryCode() {
+		return this.countryCode;
 	}
 
-	public void setActivity(String activity) {
-		this.activity = activity;
-	}
-
-	public int getActivityID() {
-		return this.activityID;
-	}
-
-	public void setActivityID(int activityID) {
-		this.activityID = activityID;
+	public void setCountryCode(int countryCode) {
+		this.countryCode = countryCode;
 	}
 
 	public String getDescription() {
@@ -94,6 +92,30 @@ public class Activity implements Serializable {
 
 	public void setIsInvalid(byte isInvalid) {
 		this.isInvalid = isInvalid;
+	}
+
+	public String getOriginalProvinceName() {
+		return this.originalProvinceName;
+	}
+
+	public void setOriginalProvinceName(String originalProvinceName) {
+		this.originalProvinceName = originalProvinceName;
+	}
+
+	public String getProvince() {
+		return this.province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public int getProvinceID() {
+		return this.provinceID;
+	}
+
+	public void setProvinceID(int provinceID) {
+		this.provinceID = provinceID;
 	}
 
 	public String getRemark() {

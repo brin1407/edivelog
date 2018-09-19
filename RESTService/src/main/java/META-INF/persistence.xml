@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="EDiveLog">
+		<class>edivelog.service.entity.Accessory</class>
+		<class>edivelog.service.entity.Activity</class>
+		<class>edivelog.service.entity.Association</class>
+		<class>edivelog.service.entity.Country</class>
+		<class>edivelog.service.entity.Dive</class>
+		<class>edivelog.service.entity.Diver</class>
+		<class>edivelog.service.entity.Diverqualification</class>
+		<class>edivelog.service.entity.Divesite</class>
+		<class>edivelog.service.entity.Footlet</class>
+		<class>edivelog.service.entity.Glove</class>
+		<class>edivelog.service.entity.Jacket</class>
+		<class>edivelog.service.entity.Medicalcertificate</class>
+		<class>edivelog.service.entity.Province</class>
+		<class>edivelog.service.entity.Qualification</class>
+		<class>edivelog.service.entity.Suite</class>
+		<class>edivelog.service.entity.Tank</class>
+		<class>edivelog.service.entity.Tanktype</class>
+	</persistence-unit>
+</persistence>

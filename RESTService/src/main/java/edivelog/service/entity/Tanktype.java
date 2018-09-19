@@ -6,23 +6,17 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the activity database table.
+ * The persistent class for the tanktype database table.
  * 
  */
 @Entity
-@Table(name="activity")
-@NamedQuery(name="Activity.findAll", query="SELECT a FROM Activity a")
-public class Activity implements Serializable {
+@Table(name="tanktype")
+@NamedQuery(name="Tanktype.findAll", query="SELECT t FROM Tanktype t")
+public class Tanktype implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(length=255)
 	private String action;
-
-	@Column(nullable=false, length=255)
-	private String activity;
-
-	@Column(nullable=false)
-	private int activityID;
 
 	@Column(length=255)
 	private String description;
@@ -33,6 +27,12 @@ public class Activity implements Serializable {
 
 	@Column(length=255)
 	private String remark;
+
+	@Column(nullable=false, length=80)
+	private String tankType;
+
+	@Column(nullable=false)
+	private int tankTypeID;
 
 	@Column(nullable=false)
 	private Timestamp timeCreate;
@@ -45,7 +45,7 @@ public class Activity implements Serializable {
 	@Column(length=255)
 	private String updatedUser;
 
-	public Activity() {
+	public Tanktype() {
 	}
 
 	public String getAction() {
@@ -54,22 +54,6 @@ public class Activity implements Serializable {
 
 	public void setAction(String action) {
 		this.action = action;
-	}
-
-	public String getActivity() {
-		return this.activity;
-	}
-
-	public void setActivity(String activity) {
-		this.activity = activity;
-	}
-
-	public int getActivityID() {
-		return this.activityID;
-	}
-
-	public void setActivityID(int activityID) {
-		this.activityID = activityID;
 	}
 
 	public String getDescription() {
@@ -102,6 +86,22 @@ public class Activity implements Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getTankType() {
+		return this.tankType;
+	}
+
+	public void setTankType(String tankType) {
+		this.tankType = tankType;
+	}
+
+	public int getTankTypeID() {
+		return this.tankTypeID;
+	}
+
+	public void setTankTypeID(int tankTypeID) {
+		this.tankTypeID = tankTypeID;
 	}
 
 	public Timestamp getTimeCreate() {

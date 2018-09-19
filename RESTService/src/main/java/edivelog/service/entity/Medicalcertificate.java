@@ -2,34 +2,51 @@ package edivelog.service.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.Date;
 import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the activity database table.
+ * The persistent class for the medicalcertificate database table.
  * 
  */
 @Entity
-@Table(name="activity")
-@NamedQuery(name="Activity.findAll", query="SELECT a FROM Activity a")
-public class Activity implements Serializable {
+@Table(name="medicalcertificate")
+@NamedQuery(name="Medicalcertificate.findAll", query="SELECT m FROM Medicalcertificate m")
+public class Medicalcertificate implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(length=255)
 	private String action;
 
-	@Column(nullable=false, length=255)
-	private String activity;
-
 	@Column(nullable=false)
-	private int activityID;
+	private int certificatID;
 
 	@Column(length=255)
 	private String description;
 
+	@Column(nullable=false)
+	private int diverID;
+
+	@Column(length=255)
+	private String doctor;
+
+	@Column(length=255)
+	private String image;
+
 	private byte isCheckedOut;
 
 	private byte isInvalid;
+
+	@Temporal(TemporalType.DATE)
+	@Column(nullable=false)
+	private Date issueDate;
+
+	@Column(length=255)
+	private String limitations;
+
+	@Column(nullable=false)
+	private int nextExamination;
 
 	@Column(length=255)
 	private String remark;
@@ -45,7 +62,7 @@ public class Activity implements Serializable {
 	@Column(length=255)
 	private String updatedUser;
 
-	public Activity() {
+	public Medicalcertificate() {
 	}
 
 	public String getAction() {
@@ -56,20 +73,12 @@ public class Activity implements Serializable {
 		this.action = action;
 	}
 
-	public String getActivity() {
-		return this.activity;
+	public int getCertificatID() {
+		return this.certificatID;
 	}
 
-	public void setActivity(String activity) {
-		this.activity = activity;
-	}
-
-	public int getActivityID() {
-		return this.activityID;
-	}
-
-	public void setActivityID(int activityID) {
-		this.activityID = activityID;
+	public void setCertificatID(int certificatID) {
+		this.certificatID = certificatID;
 	}
 
 	public String getDescription() {
@@ -78,6 +87,30 @@ public class Activity implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getDiverID() {
+		return this.diverID;
+	}
+
+	public void setDiverID(int diverID) {
+		this.diverID = diverID;
+	}
+
+	public String getDoctor() {
+		return this.doctor;
+	}
+
+	public void setDoctor(String doctor) {
+		this.doctor = doctor;
+	}
+
+	public String getImage() {
+		return this.image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public byte getIsCheckedOut() {
@@ -94,6 +127,30 @@ public class Activity implements Serializable {
 
 	public void setIsInvalid(byte isInvalid) {
 		this.isInvalid = isInvalid;
+	}
+
+	public Date getIssueDate() {
+		return this.issueDate;
+	}
+
+	public void setIssueDate(Date issueDate) {
+		this.issueDate = issueDate;
+	}
+
+	public String getLimitations() {
+		return this.limitations;
+	}
+
+	public void setLimitations(String limitations) {
+		this.limitations = limitations;
+	}
+
+	public int getNextExamination() {
+		return this.nextExamination;
+	}
+
+	public void setNextExamination(int nextExamination) {
+		this.nextExamination = nextExamination;
 	}
 
 	public String getRemark() {

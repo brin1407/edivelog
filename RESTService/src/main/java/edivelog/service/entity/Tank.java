@@ -6,23 +6,17 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the activity database table.
+ * The persistent class for the tanks database table.
  * 
  */
 @Entity
-@Table(name="activity")
-@NamedQuery(name="Activity.findAll", query="SELECT a FROM Activity a")
-public class Activity implements Serializable {
+@Table(name="tanks")
+@NamedQuery(name="Tank.findAll", query="SELECT t FROM Tank t")
+public class Tank implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(length=255)
 	private String action;
-
-	@Column(nullable=false, length=255)
-	private String activity;
-
-	@Column(nullable=false)
-	private int activityID;
 
 	@Column(length=255)
 	private String description;
@@ -31,8 +25,20 @@ public class Activity implements Serializable {
 
 	private byte isInvalid;
 
+	@Column(nullable=false)
+	private float pressure;
+
 	@Column(length=255)
 	private String remark;
+
+	@Column(nullable=false)
+	private float size;
+
+	@Column(nullable=false)
+	private int tanksID;
+
+	@Column(nullable=false)
+	private int tankType;
 
 	@Column(nullable=false)
 	private Timestamp timeCreate;
@@ -45,7 +51,7 @@ public class Activity implements Serializable {
 	@Column(length=255)
 	private String updatedUser;
 
-	public Activity() {
+	public Tank() {
 	}
 
 	public String getAction() {
@@ -54,22 +60,6 @@ public class Activity implements Serializable {
 
 	public void setAction(String action) {
 		this.action = action;
-	}
-
-	public String getActivity() {
-		return this.activity;
-	}
-
-	public void setActivity(String activity) {
-		this.activity = activity;
-	}
-
-	public int getActivityID() {
-		return this.activityID;
-	}
-
-	public void setActivityID(int activityID) {
-		this.activityID = activityID;
 	}
 
 	public String getDescription() {
@@ -96,12 +86,44 @@ public class Activity implements Serializable {
 		this.isInvalid = isInvalid;
 	}
 
+	public float getPressure() {
+		return this.pressure;
+	}
+
+	public void setPressure(float pressure) {
+		this.pressure = pressure;
+	}
+
 	public String getRemark() {
 		return this.remark;
 	}
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public float getSize() {
+		return this.size;
+	}
+
+	public void setSize(float size) {
+		this.size = size;
+	}
+
+	public int getTanksID() {
+		return this.tanksID;
+	}
+
+	public void setTanksID(int tanksID) {
+		this.tanksID = tanksID;
+	}
+
+	public int getTankType() {
+		return this.tankType;
+	}
+
+	public void setTankType(int tankType) {
+		this.tankType = tankType;
 	}
 
 	public Timestamp getTimeCreate() {

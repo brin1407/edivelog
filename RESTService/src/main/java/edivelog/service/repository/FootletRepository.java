@@ -1,7 +1,7 @@
 /*
  * Project:		EDiveLog
  * Package:		edivelog.service.repository
- * File: 		ActivityRepository.java
+ * File: 		Footlet.java
  *
  * Created:		Sep 19, 2018
  * Author:		amondruffel (Sophos Technology GmbH)
@@ -11,9 +11,9 @@ package edivelog.service.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import edivelog.service.entity.Activity;
+import edivelog.service.entity.Footlet;
 
-public interface ActivityRepository extends CrudRepository<Activity, Integer> {
+public interface FootletRepository extends CrudRepository<Footlet, Integer> {
 
   //
 }

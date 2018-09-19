@@ -6,26 +6,23 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the activity database table.
+ * The persistent class for the gloves database table.
  * 
  */
 @Entity
-@Table(name="activity")
-@NamedQuery(name="Activity.findAll", query="SELECT a FROM Activity a")
-public class Activity implements Serializable {
+@Table(name="gloves")
+@NamedQuery(name="Glove.findAll", query="SELECT g FROM Glove g")
+public class Glove implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(length=255)
 	private String action;
 
-	@Column(nullable=false, length=255)
-	private String activity;
-
-	@Column(nullable=false)
-	private int activityID;
-
 	@Column(length=255)
 	private String description;
+
+	@Column(nullable=false)
+	private int glovesID;
 
 	private byte isCheckedOut;
 
@@ -45,7 +42,7 @@ public class Activity implements Serializable {
 	@Column(length=255)
 	private String updatedUser;
 
-	public Activity() {
+	public Glove() {
 	}
 
 	public String getAction() {
@@ -56,28 +53,20 @@ public class Activity implements Serializable {
 		this.action = action;
 	}
 
-	public String getActivity() {
-		return this.activity;
-	}
-
-	public void setActivity(String activity) {
-		this.activity = activity;
-	}
-
-	public int getActivityID() {
-		return this.activityID;
-	}
-
-	public void setActivityID(int activityID) {
-		this.activityID = activityID;
-	}
-
 	public String getDescription() {
 		return this.description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getGlovesID() {
+		return this.glovesID;
+	}
+
+	public void setGlovesID(int glovesID) {
+		this.glovesID = glovesID;
 	}
 
 	public byte getIsCheckedOut() {

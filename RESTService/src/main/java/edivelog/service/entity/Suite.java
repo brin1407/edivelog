@@ -6,23 +6,17 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the activity database table.
+ * The persistent class for the suite database table.
  * 
  */
 @Entity
-@Table(name="activity")
-@NamedQuery(name="Activity.findAll", query="SELECT a FROM Activity a")
-public class Activity implements Serializable {
+@Table(name="suite")
+@NamedQuery(name="Suite.findAll", query="SELECT s FROM Suite s")
+public class Suite implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(length=255)
 	private String action;
-
-	@Column(nullable=false, length=255)
-	private String activity;
-
-	@Column(nullable=false)
-	private int activityID;
 
 	@Column(length=255)
 	private String description;
@@ -35,6 +29,9 @@ public class Activity implements Serializable {
 	private String remark;
 
 	@Column(nullable=false)
+	private int suiteID;
+
+	@Column(nullable=false)
 	private Timestamp timeCreate;
 
 	private Timestamp timeUpdate;
@@ -45,7 +42,7 @@ public class Activity implements Serializable {
 	@Column(length=255)
 	private String updatedUser;
 
-	public Activity() {
+	public Suite() {
 	}
 
 	public String getAction() {
@@ -54,22 +51,6 @@ public class Activity implements Serializable {
 
 	public void setAction(String action) {
 		this.action = action;
-	}
-
-	public String getActivity() {
-		return this.activity;
-	}
-
-	public void setActivity(String activity) {
-		this.activity = activity;
-	}
-
-	public int getActivityID() {
-		return this.activityID;
-	}
-
-	public void setActivityID(int activityID) {
-		this.activityID = activityID;
 	}
 
 	public String getDescription() {
@@ -102,6 +83,14 @@ public class Activity implements Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public int getSuiteID() {
+		return this.suiteID;
+	}
+
+	public void setSuiteID(int suiteID) {
+		this.suiteID = suiteID;
 	}
 
 	public Timestamp getTimeCreate() {

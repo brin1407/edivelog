@@ -6,23 +6,23 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the activity database table.
+ * The persistent class for the country database table.
  * 
  */
 @Entity
-@Table(name="activity")
-@NamedQuery(name="Activity.findAll", query="SELECT a FROM Activity a")
-public class Activity implements Serializable {
+@Table(name="country")
+@NamedQuery(name="Country.findAll", query="SELECT c FROM Country c")
+public class Country implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(length=255)
 	private String action;
 
 	@Column(nullable=false, length=255)
-	private String activity;
+	private String country;
 
 	@Column(nullable=false)
-	private int activityID;
+	private int countryCode;
 
 	@Column(length=255)
 	private String description;
@@ -30,6 +30,9 @@ public class Activity implements Serializable {
 	private byte isCheckedOut;
 
 	private byte isInvalid;
+
+	@Column(nullable=false, length=3)
+	private String iso3166;
 
 	@Column(length=255)
 	private String remark;
@@ -45,7 +48,7 @@ public class Activity implements Serializable {
 	@Column(length=255)
 	private String updatedUser;
 
-	public Activity() {
+	public Country() {
 	}
 
 	public String getAction() {
@@ -56,20 +59,20 @@ public class Activity implements Serializable {
 		this.action = action;
 	}
 
-	public String getActivity() {
-		return this.activity;
+	public String getCountry() {
+		return this.country;
 	}
 
-	public void setActivity(String activity) {
-		this.activity = activity;
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
-	public int getActivityID() {
-		return this.activityID;
+	public int getCountryCode() {
+		return this.countryCode;
 	}
 
-	public void setActivityID(int activityID) {
-		this.activityID = activityID;
+	public void setCountryCode(int countryCode) {
+		this.countryCode = countryCode;
 	}
 
 	public String getDescription() {
@@ -94,6 +97,14 @@ public class Activity implements Serializable {
 
 	public void setIsInvalid(byte isInvalid) {
 		this.isInvalid = isInvalid;
+	}
+
+	public String getIso3166() {
+		return this.iso3166;
+	}
+
+	public void setIso3166(String iso3166) {
+		this.iso3166 = iso3166;
 	}
 
 	public String getRemark() {

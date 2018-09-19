@@ -6,23 +6,23 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the activity database table.
+ * The persistent class for the accessories database table.
  * 
  */
 @Entity
-@Table(name="activity")
-@NamedQuery(name="Activity.findAll", query="SELECT a FROM Activity a")
-public class Activity implements Serializable {
+@Table(name="accessories")
+@NamedQuery(name="Accessory.findAll", query="SELECT a FROM Accessory a")
+public class Accessory implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	@Column(nullable=false, length=100)
+	private String accessories;
+
+	@Column(nullable=false)
+	private int accessoriesID;
 
 	@Column(length=255)
 	private String action;
-
-	@Column(nullable=false, length=255)
-	private String activity;
-
-	@Column(nullable=false)
-	private int activityID;
 
 	@Column(length=255)
 	private String description;
@@ -45,7 +45,23 @@ public class Activity implements Serializable {
 	@Column(length=255)
 	private String updatedUser;
 
-	public Activity() {
+	public Accessory() {
+	}
+
+	public String getAccessories() {
+		return this.accessories;
+	}
+
+	public void setAccessories(String accessories) {
+		this.accessories = accessories;
+	}
+
+	public int getAccessoriesID() {
+		return this.accessoriesID;
+	}
+
+	public void setAccessoriesID(int accessoriesID) {
+		this.accessoriesID = accessoriesID;
 	}
 
 	public String getAction() {
@@ -54,22 +70,6 @@ public class Activity implements Serializable {
 
 	public void setAction(String action) {
 		this.action = action;
-	}
-
-	public String getActivity() {
-		return this.activity;
-	}
-
-	public void setActivity(String activity) {
-		this.activity = activity;
-	}
-
-	public int getActivityID() {
-		return this.activityID;
-	}
-
-	public void setActivityID(int activityID) {
-		this.activityID = activityID;
 	}
 
 	public String getDescription() {

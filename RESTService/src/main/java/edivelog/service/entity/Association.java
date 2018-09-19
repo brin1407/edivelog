@@ -1,181 +1,150 @@
-/*
- * Project:		RESTService
- * Package:		edivelog.service.entity
- * File: 		Association.java
- *
- * Created:		Sep 5, 2018
- * Author:		amondruffel (Sophos Technology GmbH)
- * Copyright:	(C) 2018 Sophos Technology GmbH
- */
 package edivelog.service.entity;
 
-import java.util.Date;
+import java.io.Serializable;
+import javax.persistence.*;
+import java.sql.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
- * <b>Description:</b><br>
+ * The persistent class for the association database table.
  * 
- *
-  *Entity class representing the Association Entity in a MySQL Database
  */
-public class Association
-{
+@Entity
+@Table(name="association")
+@NamedQuery(name="Association.findAll", query="SELECT a FROM Association a")
+public class Association implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer associationID;
-    
-    @Column(name = "Association", length = 100, nullable=false)
-    private String association;
-    
-    @Column(name = "Description", length = 255, nullable=true)
-    private String description;
-    
-    @Column(name = "Remark", length = 255, nullable=true)
-    private String remark;
-    
-    @Column(name = "isCheckedOut", nullable=true)
-    private boolean isCheckedOut;
-    
-    @Column(name = "Action", length = 255, nullable=true)
-    private String action;
-    
-    @Column(name = "isInvalid", nullable=true)
-    private boolean isInvalid;
-    
-    @Column(name = "TimeCreate", nullable=false)
-    private Date timeCreate;
-    
-    @Column(name = "TimeUpdate", nullable=true)
-    private Date timeUpdate;
-    
-    @Column(name = "UpdatedUser", length = 255, nullable=true)
-    private String updatedUser;
-    
-    @Column(name = "UpdateCount", length = 11, nullable=false)
-    private int updateCount;
-    
-    protected Association() {}
-    
-    public Association(String association, Date timeCreate, int updateCount)
-    {
-        this.association = association;
-        this.timeCreate = timeCreate;
-        this.updateCount = updateCount;
-    }
-    
-    public Integer getAssociationID()
-    {
-        return associationID;
-    }
+	@Column(length=255)
+	private String action;
 
-    public void setAsscociationID(Integer associationID)
-    {
-        this.associationID = associationID;
-    }
+	@Column(length=255)
+	private String association;
 
-    public String getAssociation()
-    {
-        return association;
-    }
+	@Column(nullable=false)
+	private int associationID;
 
-    public void setAssociation(String association)
-    {
-        this.association = association;
-    }
+	@Column(length=255)
+	private String description;
 
-    public String getDescription()
-    {
-        return description;
-    }
+	private byte isCheckedOut;
 
-    public void setDescription(String description)
-    {
-        this.description = description;
-    }
+	private byte isInvalid;
 
-    public String getRemark()
-    {
-        return remark;
-    }
+	@Column(length=255)
+	private String remark;
 
-    public void setRemark(String remark)
-    {
-        this.remark = remark;
-    }
+	@Column(nullable=false, length=5)
+	private String shortAssociation;
 
-    public boolean isCheckedOut()
-    {
-        return isCheckedOut;
-    }
+	@Column(nullable=false)
+	private Timestamp timeCreate;
 
-    public void setCheckedOut(boolean isCheckedOut)
-    {
-        this.isCheckedOut = isCheckedOut;
-    }
+	private Timestamp timeUpdate;
 
-    public String getAction()
-    {
-        return action;
-    }
+	@Column(nullable=false)
+	private int updateCount;
 
-    public void setAction(String action)
-    {
-        this.action = action;
-    }
+	@Column(length=255)
+	private String updatedUser;
 
-    public boolean isInvalid()
-    {
-        return isInvalid;
-    }
+	public Association() {
+	}
 
-    public void setInvalid(boolean isInvalid)
-    {
-        this.isInvalid = isInvalid;
-    }
+	public String getAction() {
+		return this.action;
+	}
 
-    public Date getTimeCreate()
-    {
-        return timeCreate;
-    }
+	public void setAction(String action) {
+		this.action = action;
+	}
 
-    public void setTimeCreate(Date timeCreate)
-    {
-        this.timeCreate = timeCreate;
-    }
+	public String getAssociation() {
+		return this.association;
+	}
 
-    public Date getTimeUpdate()
-    {
-        return timeUpdate;
-    }
+	public void setAssociation(String association) {
+		this.association = association;
+	}
 
-    public void setTimeUpdate(Date timeUpdate)
-    {
-        this.timeUpdate = timeUpdate;
-    }
+	public int getAssociationID() {
+		return this.associationID;
+	}
 
-    public String getUpdatedUser()
-    {
-        return updatedUser;
-    }
+	public void setAssociationID(int associationID) {
+		this.associationID = associationID;
+	}
 
-    public void setUpdatedUser(String updatedUser)
-    {
-        this.updatedUser = updatedUser;
-    }
+	public String getDescription() {
+		return this.description;
+	}
 
-    public int getUpdateCount()
-    {
-        return updateCount;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void setUpdateCount(int updateCount)
-    {
-        this.updateCount = updateCount;
-    }
-    
+	public byte getIsCheckedOut() {
+		return this.isCheckedOut;
+	}
+
+	public void setIsCheckedOut(byte isCheckedOut) {
+		this.isCheckedOut = isCheckedOut;
+	}
+
+	public byte getIsInvalid() {
+		return this.isInvalid;
+	}
+
+	public void setIsInvalid(byte isInvalid) {
+		this.isInvalid = isInvalid;
+	}
+
+	public String getRemark() {
+		return this.remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getShortAssociation() {
+		return this.shortAssociation;
+	}
+
+	public void setShortAssociation(String shortAssociation) {
+		this.shortAssociation = shortAssociation;
+	}
+
+	public Timestamp getTimeCreate() {
+		return this.timeCreate;
+	}
+
+	public void setTimeCreate(Timestamp timeCreate) {
+		this.timeCreate = timeCreate;
+	}
+
+	public Timestamp getTimeUpdate() {
+		return this.timeUpdate;
+	}
+
+	public void setTimeUpdate(Timestamp timeUpdate) {
+		this.timeUpdate = timeUpdate;
+	}
+
+	public int getUpdateCount() {
+		return this.updateCount;
+	}
+
+	public void setUpdateCount(int updateCount) {
+		this.updateCount = updateCount;
+	}
+
+	public String getUpdatedUser() {
+		return this.updatedUser;
+	}
+
+	public void setUpdatedUser(String updatedUser) {
+		this.updatedUser = updatedUser;
+	}
+
 }

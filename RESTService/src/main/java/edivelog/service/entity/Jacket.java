@@ -6,30 +6,33 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the activity database table.
+ * The persistent class for the jacket database table.
  * 
  */
 @Entity
-@Table(name="activity")
-@NamedQuery(name="Activity.findAll", query="SELECT a FROM Activity a")
-public class Activity implements Serializable {
+@Table(name="jacket")
+@NamedQuery(name="Jacket.findAll", query="SELECT j FROM Jacket j")
+public class Jacket implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(length=255)
 	private String action;
 
-	@Column(nullable=false, length=255)
-	private String activity;
-
-	@Column(nullable=false)
-	private int activityID;
-
 	@Column(length=255)
 	private String description;
+
+	@Column(length=255)
+	private String image;
 
 	private byte isCheckedOut;
 
 	private byte isInvalid;
+
+	@Column(nullable=false, length=255)
+	private String jacket;
+
+	@Column(nullable=false)
+	private int jacketID;
 
 	@Column(length=255)
 	private String remark;
@@ -45,7 +48,7 @@ public class Activity implements Serializable {
 	@Column(length=255)
 	private String updatedUser;
 
-	public Activity() {
+	public Jacket() {
 	}
 
 	public String getAction() {
@@ -56,28 +59,20 @@ public class Activity implements Serializable {
 		this.action = action;
 	}
 
-	public String getActivity() {
-		return this.activity;
-	}
-
-	public void setActivity(String activity) {
-		this.activity = activity;
-	}
-
-	public int getActivityID() {
-		return this.activityID;
-	}
-
-	public void setActivityID(int activityID) {
-		this.activityID = activityID;
-	}
-
 	public String getDescription() {
 		return this.description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getImage() {
+		return this.image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public byte getIsCheckedOut() {
@@ -94,6 +89,22 @@ public class Activity implements Serializable {
 
 	public void setIsInvalid(byte isInvalid) {
 		this.isInvalid = isInvalid;
+	}
+
+	public String getJacket() {
+		return this.jacket;
+	}
+
+	public void setJacket(String jacket) {
+		this.jacket = jacket;
+	}
+
+	public int getJacketID() {
+		return this.jacketID;
+	}
+
+	public void setJacketID(int jacketID) {
+		this.jacketID = jacketID;
 	}
 
 	public String getRemark() {
