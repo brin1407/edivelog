@@ -1,9 +1,8 @@
--- Was fehlt noch in der Datenbank:
+-- Fehlende Tabellen / Beziehungen / ...
 -- Taucherbuddy-Zuordnung fehlt
--- Dive > Ttauchgangsbestätigung Buddy
--- Jeder Buddy wird in Diver gespeichert (Abfrage, ob das abgestimmt war => DSGVO)
--- Hash-Werte für einzelne Datensätze
--- E-Mail bei Erstellung eines Tauchers
+-- Dive > Tauchgangsbestätigung Buddy (in Taucherbuddy-Zuordnung?)
+-- Hash-Werte für einzelne Datensätze (Datensicherheit?)
+-- Verschlüsselung / Sicherheit der Diver-Daten
 
 
 -- --------------------------------------------------------
@@ -93,7 +92,6 @@ DROP TABLE IF EXISTS `Country`;
 CREATE TABLE `Country` (
   `CountryCode` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'CountryCode',
   `Country` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Land',
-  `ISO3166` CHAR(3) NOT NULL,
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isCheckedOut` BOOLEAN DEFAULT false,
@@ -195,6 +193,7 @@ CREATE TABLE `Diver` (
   `Location` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Ort',
   `Country` int(11) NOT NULL COMMENT 'FK: Land',
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
+  `AcceptPrivacy` BOOLEAN DEFAULT FALSE NOT NULL COMMENT 'Datenschutzerklärung',
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
@@ -449,13 +448,6 @@ CREATE TABLE `Tanks` (
 --
 ALTER TABLE `Activity`
   ADD KEY `Activity` (`Activity`);
-
---
--- Indizes für die Tabelle `Country`
---
-ALTER TABLE `Country`
-  ADD UNIQUE KEY `ISO3166` (`ISO3166`);
-
 
 --
 -- Indizes für die Tabelle `DiveSite`
