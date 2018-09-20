@@ -1,8 +1,9 @@
--- Fehlende Tabellen / Beziehungen / ...
+-- Was fehlt noch in der Datenbank:
 -- Taucherbuddy-Zuordnung fehlt
--- Dive > Tauchgangsbestätigung Buddy (in Taucherbuddy-Zuordnung?)
--- Hash-Werte für einzelne Datensätze (Datensicherheit?)
--- Verschlüsselung / Sicherheit der Diver-Daten
+-- Dive > Ttauchgangsbestätigung Buddy
+-- Jeder Buddy wird in Diver gespeichert (Abfrage, ob das abgestimmt war => DSGVO)
+-- Hash-Werte für einzelne Datensätze
+-- E-Mail bei Erstellung eines Tauchers
 
 
 -- --------------------------------------------------------
@@ -24,6 +25,7 @@ CREATE TABLE `Accessories` (
   `Accessories` varchar(100) COLLATE utf8_general_mysql500_ci NOT NULL,
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `FileName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Dateiname des Bildes',
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
@@ -33,7 +35,26 @@ CREATE TABLE `Accessories` (
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchzubehör';
 
-
+-- --------------------------------------------------------
+--
+-- Tabellenstruktur für Tabelle `AccessoriesDive`
+--
+--
+DROP TABLE IF EXISTS `AccessoriesDive`;
+CREATE TABLE `AccessoriesDive` (
+  `AccessoriesDive` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `Accessories` int(11) NOT NULL,
+  `Dive` int(11) NOT NULL,
+  `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `isCheckedOut` BOOLEAN DEFAULT false,
+  `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `isInvalid` BOOLEAN Default false,
+  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchzubehör Tauchgang';
 
 -- --------------------------------------------------------
 --
@@ -72,6 +93,7 @@ CREATE TABLE `Association` (
   `ShortAssociation` varchar(5) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Abkürzung der ORGANIZATION',
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `FileName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Dateiname des Bildes',
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
@@ -94,6 +116,7 @@ CREATE TABLE `Country` (
   `Country` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Land',
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `FileName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Flaggenname des Landes',
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
@@ -161,7 +184,7 @@ CREATE TABLE `DiveSite` (
   `WaterType` enum('Salzwasser','Süßwasser') COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Wassertyp',
   `Ground` enum('Sand','Felsen','Koralle','Schlamm','Sonstiges') COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Grund',
   `Remarks` text COLLATE utf8_general_mysql500_ci,
-  `FileLocation` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Tauchplatzbild (Karte)',
+  `FileName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Dateiname der Tauchkarte',
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isCheckedOut` BOOLEAN DEFAULT false,
@@ -195,6 +218,7 @@ CREATE TABLE `Diver` (
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
   `AcceptPrivacy` BOOLEAN DEFAULT FALSE NOT NULL COMMENT 'Datenschutzerklärung',
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `FileName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Dateiname des Profilbildes',
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
@@ -219,6 +243,7 @@ CREATE TABLE `DiverQualification` (
   `IssueDate` date NOT NULL COMMENT 'Austelldatum der Qualifikation',
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `FileName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Dateiname vom Bild der Qualifikation',
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
@@ -241,6 +266,7 @@ CREATE TABLE `Footlets` (
   `Zipper` tinyint(1) DEFAULT NULL,
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `FileName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Dateiname des Bildes fuer Fuesslinge',
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
@@ -262,6 +288,7 @@ CREATE TABLE `Gloves` (
   `GlovesID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `FileName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Dateiname des Bildes fuer Handschuhe',
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
@@ -285,6 +312,7 @@ CREATE TABLE `Jacket` (
   `Image` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `FileName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Bildname des Jackets',
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
@@ -292,7 +320,7 @@ CREATE TABLE `Jacket` (
   `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tarierjackets';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tarierjacket';
 
 -- --------------------------------------------------------
 
@@ -309,7 +337,7 @@ CREATE TABLE `MedicalCertificate` (
   `IssueDate` date NOT NULL COMMENT 'Ausstelldatum der Urkunde',
   `NextExamination` int(11) NOT NULL COMMENT 'Angabe der Jahre',
   `Doctor` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `Image` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `FileName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Dateiname der Bescheinigung',
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isCheckedOut` BOOLEAN DEFAULT false,
@@ -337,6 +365,7 @@ CREATE TABLE `Province` (
   `OriginalProvinceName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `FileName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Dateiname der Flagge',
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
@@ -382,6 +411,7 @@ CREATE TABLE `Suite` (
   `SuiteID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `FileName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Bild vom Tauchanzug',
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
@@ -429,6 +459,7 @@ CREATE TABLE `Tanks` (
   `TankType` int(11) NOT NULL,
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `FileName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'moegliches Bild der Flasche',
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
@@ -444,54 +475,92 @@ CREATE TABLE `Tanks` (
 --
 
 --
+-- Indizes für die Tabelle `Accessories`
+--
+ALTER TABLE `Accessories`
+  ADD UNIQUE KEY `FileName` (`FileName`);
+
+--
+-- Indizes für die Tabelle `AccessoriesDive`
+--
+ALTER TABLE `AccessoriesDive`
+  ADD UNIQUE KEY `AccessoriesDive` (`Accessories`,`Dive`);
+  
+--
 -- Indizes für die Tabelle `Activity`
 --
 ALTER TABLE `Activity`
   ADD KEY `Activity` (`Activity`);
 
 --
+-- Indizes für die Tabelle `Association`
+--
+ALTER TABLE `Association`
+  ADD UNIQUE KEY `FileName` (`FileName`);
+  
+--
+-- Indizes für die Tabelle `Country`
+--
+ALTER TABLE `Country`
+  ADD UNIQUE KEY `FileName` (`FileName`);
+    
+--
 -- Indizes für die Tabelle `DiveSite`
 --
 ALTER TABLE `DiveSite`
   ADD KEY `Country` (`Province`),
-  ADD KEY `Entrace` (`Entrace`,`WaterType`,`Ground`);
+  ADD KEY `Entrace` (`Entrace`,`WaterType`,`Ground`),
+  ADD UNIQUE KEY `FileName` (`FileName`);
 
 --
 -- Indizes für die Tabelle `Diver`
 --
 ALTER TABLE `Diver`
   ADD KEY `Country` (`Country`),
-  ADD UNIQUE KEY `Username` (`Username`);
+  ADD UNIQUE KEY `Username` (`Username`),
+  ADD UNIQUE KEY `FileName` (`FileName`);;
 
 --
 -- Indizes für die Tabelle `DiverQualification`
 --
 ALTER TABLE `DiverQualification`
-  ADD UNIQUE KEY `Diver` (`Diver`,`Qualification`);
+  ADD UNIQUE KEY `Diver` (`Diver`,`Qualification`),
+  ADD UNIQUE KEY `FileName` (`FileName`);
 
 --
 -- Indizes für die Tabelle `Footlets`
 --
 ALTER TABLE `Footlets`
-  ADD UNIQUE KEY `Remark` (`Remark`);
+  ADD UNIQUE KEY `Remark` (`Remark`),
+  ADD UNIQUE KEY `FileName` (`FileName`);
 
 --
 -- Indizes für die Tabelle `Gloves`
 --
 ALTER TABLE `Gloves`
-  ADD UNIQUE KEY `Remark` (`Remark`);
+  ADD UNIQUE KEY `Remark` (`Remark`),
+  ADD UNIQUE KEY `FileName` (`FileName`);
 
+--
+-- Indizes für die Tabelle `Jacket`
+--
+ALTER TABLE `Jacket`
+  ADD UNIQUE KEY `Jacket` (`Jacket`),
+  ADD UNIQUE KEY `FileName` (`FileName`);  
+  
 --
 -- Indizes für die Tabelle `MedicalCertificate`
 --
 ALTER TABLE `MedicalCertificate`
-  ADD KEY `DiverID` (`DiverID`);
+  ADD KEY `DiverID` (`DiverID`),
+  ADD UNIQUE KEY `FileName` (`FileName`);
 
 --
 -- Indizes für die Tabelle `Province`
 --
 ALTER TABLE `Province`
-  ADD KEY `CountryID` (`CountryCode`);
+  ADD KEY `CountryID` (`CountryCode`),
+  ADD UNIQUE KEY `FileName` (`FileName`);
 
 --
 -- Indizes für die Tabelle `Qualification`
@@ -503,13 +572,15 @@ ALTER TABLE `Qualification`
 -- Indizes für die Tabelle `Suite`
 --
 ALTER TABLE `Suite`
-  ADD UNIQUE KEY `Remark` (`Remark`);
+  ADD UNIQUE KEY `Remark` (`Remark`),
+  ADD UNIQUE KEY `FileName` (`FileName`);
 
 --
 -- Indizes für die Tabelle `Tanks`
 --
 ALTER TABLE `Tanks`
   ADD UNIQUE KEY `Remark` (`Remark`,`Size`,`TankType`),
+  ADD UNIQUE KEY `FileName` (`FileName`),
   ADD KEY `TankType` (`TankType`);
 
 
@@ -525,7 +596,13 @@ ALTER TABLE `Dive`
   ADD KEY `Tank` (`Tank`),
   ADD KEY `DiveSite` (`DiveSite`);
 
-
+--
+-- Constraints der Tabelle `AccessoriesDive`
+--
+ALTER TABLE `AccessoriesDive`
+  ADD CONSTRAINT `AccessoriesDive_ibfk_1` FOREIGN KEY (`Dive`) REFERENCES `Dive` (`DiveID`),
+  ADD CONSTRAINT `AccessoriesDive_ibfk_2` FOREIGN KEY (`Accessories`) REFERENCES `Accessories` (`AccessoriesID`);  
+  
 --
 -- Constraints der Tabelle `Dive`
 --
@@ -550,7 +627,7 @@ ALTER TABLE `DiveSite`
 ALTER TABLE `DiverQualification`
   ADD CONSTRAINT `DiverQualification_ibfk_1` FOREIGN KEY (`Diver`) REFERENCES `Diver` (`DiverID`),
   ADD CONSTRAINT `DiverQualification_ibfk_2` FOREIGN KEY (`Qualification`) REFERENCES `Qualification` (`QualificationID`);
-
+  
 --
 -- Constraints der Tabelle `Diver`
 --
