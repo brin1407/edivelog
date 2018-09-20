@@ -1,9 +1,7 @@
 -- Was fehlt noch in der Datenbank:
 -- Taucherbuddy-Zuordnung fehlt
--- Dive > Ttauchgangsbestätigung Buddy
--- Jeder Buddy wird in Diver gespeichert (Abfrage, ob das abgestimmt war => DSGVO)
+-- Dive > Tauchgangsbestätigung Buddy
 -- Hash-Werte für einzelne Datensätze
--- E-Mail bei Erstellung eines Tauchers
 
 
 -- --------------------------------------------------------
