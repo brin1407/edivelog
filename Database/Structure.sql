@@ -1,6 +1,5 @@
 -- Was fehlt noch in der Datenbank:
 -- Taucherbuddy-Zuordnung fehlt
--- Dive - Activity Zuordnung fehlt
 -- Dive > Tauchgangsbestätigung Buddy
 -- Hash-Werte für einzelne Datensätze
 
