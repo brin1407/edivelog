@@ -77,6 +77,27 @@ CREATE TABLE `Activity` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Aktivitäten des Tauchgangs';
 
 
+-- --------------------------------------------------------
+--
+-- Tabellenstruktur für Tabelle `ActivityDive`
+--
+--
+DROP TABLE IF EXISTS `ActivityDive`;
+CREATE TABLE `ActivityDive` (
+  `ActivityDive` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `Activity` int(11) NOT NULL,
+  `Dive` int(11) NOT NULL,
+  `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `isCheckedOut` BOOLEAN DEFAULT false,
+  `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `isInvalid` BOOLEAN Default false,
+  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Aktivitäten Tauchgang';
+
 
 -- --------------------------------------------------------
 
@@ -458,7 +479,13 @@ ALTER TABLE `Accessories`
 --
 ALTER TABLE `AccessoriesDive`
   ADD UNIQUE KEY `AccessoriesDive` (`Accessories`,`Dive`);
-  
+
+--
+-- Indizes für die Tabelle `AccessoriesDive`
+--
+ALTER TABLE `ActivityDive`
+  ADD UNIQUE KEY `ActivityDive` (`Activity`,`Dive`);
+ 
 --
 -- Indizes für die Tabelle `Activity`
 --
@@ -568,6 +595,14 @@ ALTER TABLE `Dive`
 ALTER TABLE `AccessoriesDive`
   ADD CONSTRAINT `AccessoriesDive_ibfk_1` FOREIGN KEY (`Dive`) REFERENCES `Dive` (`DiveID`),
   ADD CONSTRAINT `AccessoriesDive_ibfk_2` FOREIGN KEY (`Accessories`) REFERENCES `Accessories` (`AccessoriesID`);  
+  
+--
+-- Constraints der Tabelle `ActivityDive`
+--
+ALTER TABLE `ActivityDive`
+  ADD CONSTRAINT `ActivityDive_ibfk_1` FOREIGN KEY (`Dive`) REFERENCES `Dive` (`DiveID`),
+  ADD CONSTRAINT `ActivityDive_ibfk_2` FOREIGN KEY (`Activity`) REFERENCES `Activity` (`ActivityID`);  
+   
   
 --
 -- Constraints der Tabelle `Dive`
