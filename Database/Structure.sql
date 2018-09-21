@@ -1,5 +1,6 @@
 -- Was fehlt noch in der Datenbank:
 -- Taucherbuddy-Zuordnung fehlt
+-- Dive - Activity Zuordnung fehlt
 -- Dive > Tauchgangsbestätigung Buddy
 -- Hash-Werte für einzelne Datensätze
 
@@ -174,13 +175,13 @@ CREATE TABLE `Dive` (
 DROP TABLE IF EXISTS `DiveSite`;
 CREATE TABLE `DiveSite` (
   `DiveSiteID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `Province` int(11) NOT NULL,
-  `Name` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Tauchplatzname Deutsch',
-  `OriginalName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Tauchplatzname Original',
+  `Country` int(11) NOT NULL COMMENT 'FK: Land',
+  `Name` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Tauchplatzname',
   `maxDepth` decimal(4,2) DEFAULT NULL COMMENT 'Maximale Tiefe des Tauchplatzes',
   `Entrace` enum('Boot','Ufer','Sonstiges') COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Eingangstyp',
   `WaterType` enum('Salzwasser','Süßwasser') COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Wassertyp',
   `Ground` enum('Sand','Felsen','Koralle','Schlamm','Sonstiges') COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Grund',
+  `DiveType` enum('Freiwasser','Steilwand (Drop-Off)','Sonstiges') COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Art des Tauchgangs',
   `Remarks` text COLLATE utf8_general_mysql500_ci,
   `FileName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Dateiname der Tauchkarte',
   `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Beschreibung',
@@ -347,32 +348,6 @@ CREATE TABLE `MedicalCertificate` (
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchtauglichkeitsuntersuchung';
 
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `Province`
---
---
-
-DROP TABLE IF EXISTS `Province`;
-CREATE TABLE `Province` (
-  `ProvinceID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `CountryCode` int(11) NOT NULL,
-  `Province` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL,
-  `OriginalProvinceName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `FileName` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Dateiname der Flagge',
-  `isCheckedOut` BOOLEAN DEFAULT false,
-  `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Bundesländer/Provinzen der einzelnen Countries';
-
 -- --------------------------------------------------------
 
 --
@@ -506,8 +481,8 @@ ALTER TABLE `Country`
 -- Indizes für die Tabelle `DiveSite`
 --
 ALTER TABLE `DiveSite`
-  ADD KEY `Country` (`Province`),
-  ADD KEY `Entrace` (`Entrace`,`WaterType`,`Ground`),
+  ADD KEY `Country` (`Country`),
+  ADD KEY `Entrace` (`Entrace`,`WaterType`,`Ground`,`DiveType`),
   ADD UNIQUE KEY `FileName` (`FileName`);
 
 --
@@ -551,13 +526,6 @@ ALTER TABLE `Jacket`
 --
 ALTER TABLE `MedicalCertificate`
   ADD KEY `DiverID` (`DiverID`),
-  ADD UNIQUE KEY `FileName` (`FileName`);
-
---
--- Indizes für die Tabelle `Province`
---
-ALTER TABLE `Province`
-  ADD KEY `CountryID` (`CountryCode`),
   ADD UNIQUE KEY `FileName` (`FileName`);
 
 --
@@ -617,7 +585,7 @@ ALTER TABLE `Dive`
 -- Constraints der Tabelle `DiveSite`
 --
 ALTER TABLE `DiveSite`
-  ADD CONSTRAINT `DiveSite_ibfk_1` FOREIGN KEY (`Province`) REFERENCES `Province` (`ProvinceID`);
+  ADD CONSTRAINT `DiveSite_ibfk_1` FOREIGN KEY (`Country`) REFERENCES `Country` (`CountryCode`);
 
 --
 -- Constraints der Tabelle `DiverQualification`
@@ -637,12 +605,6 @@ ALTER TABLE `Diver`
 --
 ALTER TABLE `MedicalCertificate`
   ADD CONSTRAINT `MedicalCertificate_ibfk_1` FOREIGN KEY (`DiverID`) REFERENCES `Diver` (`DiverID`);
-
---
--- Constraints der Tabelle `Province`
---
-ALTER TABLE `Province`
-  ADD CONSTRAINT `Province_ibfk_1` FOREIGN KEY (`CountryCode`) REFERENCES `Country` (`CountryCode`);
 
 --
 -- Constraints der Tabelle `Qualification`
