@@ -1,5 +1,4 @@
 -- Was fehlt noch in der Datenbank:
--- Taucherbuddy-Zuordnung fehlt
 -- Dive > Tauchgangsbestätigung Buddy
 -- Hash-Werte für einzelne Datensätze
 
@@ -248,6 +247,29 @@ CREATE TABLE `Diver` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Taucherinformationen';
 
 -- --------------------------------------------------------
+--
+-- Tabellenstruktur für Tabelle `DiverDive`
+--
+--
+DROP TABLE IF EXISTS `DiverDive`;
+CREATE TABLE `DiverDive` (
+  `DiverDive` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `Diver` int(11) NOT NULL,
+  `Dive` int(11) NOT NULL,
+  `Description` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Remark` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `isCheckedOut` BOOLEAN DEFAULT false,
+  `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `isInvalid` BOOLEAN Default false,
+  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `UpdateCount` int(11) DEFAULT 1 NOT NULL  
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Aktivitäten Tauchgang';
+
+
+
+-- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `DiverQualification`
@@ -484,7 +506,7 @@ ALTER TABLE `AccessoriesDive`
 --
 ALTER TABLE `ActivityDive`
   ADD UNIQUE KEY `ActivityDive` (`Activity`,`Dive`);
- 
+  
 --
 -- Indizes für die Tabelle `Activity`
 --
@@ -518,6 +540,13 @@ ALTER TABLE `Diver`
   ADD KEY `Country` (`Country`),
   ADD UNIQUE KEY `Username` (`Username`),
   ADD UNIQUE KEY `FileName` (`FileName`);;
+
+  
+--
+-- Indizes für die Tabelle `DiverDive`
+--
+ALTER TABLE `DiverDive`
+  ADD UNIQUE KEY `DiverDive` (`Diver`,`Dive`);
 
 --
 -- Indizes für die Tabelle `DiverQualification`
@@ -634,6 +663,14 @@ ALTER TABLE `DiverQualification`
 ALTER TABLE `Diver`
   ADD CONSTRAINT `Diver_ibfk_1` FOREIGN KEY (`Country`) REFERENCES `Country` (`CountryCode`);
 
+--
+-- Constraints der Tabelle `DiverDive`
+--
+ALTER TABLE `DiverDive`
+  ADD CONSTRAINT `DiverDive_ibfk_1` FOREIGN KEY (`Dive`) REFERENCES `Dive` (`DiveID`),
+  ADD CONSTRAINT `DiverDive_ibfk_2` FOREIGN KEY (`Diver`) REFERENCES `Diver` (`DiverID`);  
+  
+  
 --
 -- Constraints der Tabelle `MedicalCertificate`
 --
