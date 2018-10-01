@@ -103,7 +103,6 @@ CREATE TABLE `ActivityDive` (
 -- Tabellenstruktur für Tabelle `Association`
 --
 --
-
 DROP TABLE IF EXISTS `Association`;
 CREATE TABLE `Association` (
   `AssociationID` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -127,7 +126,6 @@ CREATE TABLE `Association` (
 -- Tabellenstruktur für Tabelle `Country`
 --
 --
-
 DROP TABLE IF EXISTS `Country`;
 CREATE TABLE `Country` (
   `CountryCode` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'CountryCode',
@@ -150,7 +148,6 @@ CREATE TABLE `Country` (
 -- Tabellenstruktur für Tabelle `Dive`
 --
 --
-
 DROP TABLE IF EXISTS `Dive`;
 CREATE TABLE `Dive` (
   `DiveID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -190,7 +187,6 @@ CREATE TABLE `Dive` (
 -- Tabellenstruktur für Tabelle `DiveSite`
 --
 --
-
 DROP TABLE IF EXISTS `DiveSite`;
 CREATE TABLE `DiveSite` (
   `DiveSiteID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -220,7 +216,6 @@ CREATE TABLE `DiveSite` (
 -- Tabellenstruktur für Tabelle `Diver`
 --
 --
-
 DROP TABLE IF EXISTS `Diver`;
 CREATE TABLE `Diver` (
   `DiverID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'TaucherID',
@@ -275,7 +270,6 @@ CREATE TABLE `DiverDive` (
 -- Tabellenstruktur für Tabelle `DiverQualification`
 --
 --
-
 DROP TABLE IF EXISTS `DiverQualification`;
 CREATE TABLE `DiverQualification` (
   `DiverQualificationID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -300,7 +294,6 @@ CREATE TABLE `DiverQualification` (
 -- Tabellenstruktur für Tabelle `Footlets`
 --
 --
-
 DROP TABLE IF EXISTS `Footlets`;
 CREATE TABLE `Footlets` (
   `FootletID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -323,7 +316,6 @@ CREATE TABLE `Footlets` (
 -- Tabellenstruktur für Tabelle `Gloves`
 --
 --
-
 DROP TABLE IF EXISTS `Gloves`;
 CREATE TABLE `Gloves` (
   `GlovesID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -345,7 +337,6 @@ CREATE TABLE `Gloves` (
 -- Tabellenstruktur für Tabelle `Jacket`
 --
 --
-
 DROP TABLE IF EXISTS `Jacket`;
 CREATE TABLE `Jacket` (
   `JacketID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -369,7 +360,6 @@ CREATE TABLE `Jacket` (
 -- Tabellenstruktur für Tabelle `MedicalCertificate`
 --
 --
-
 DROP TABLE IF EXISTS `MedicalCertificate`;
 CREATE TABLE `MedicalCertificate` (
   `CertificatID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -396,7 +386,6 @@ CREATE TABLE `MedicalCertificate` (
 -- Tabellenstruktur für Tabelle `Qualification`
 --
 --
-
 DROP TABLE IF EXISTS `Qualification`;
 CREATE TABLE `Qualification` (
   `QualificationID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -420,7 +409,6 @@ CREATE TABLE `Qualification` (
 -- Tabellenstruktur für Tabelle `Suite`
 --
 --
-
 DROP TABLE IF EXISTS `Suite`;
 CREATE TABLE `Suite` (
   `SuiteID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -442,7 +430,6 @@ CREATE TABLE `Suite` (
 -- Tabellenstruktur für Tabelle `TankType`
 --
 --
-
 DROP TABLE IF EXISTS `TankType`;
 CREATE TABLE `TankType` (
   `TankTypeID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -465,7 +452,6 @@ CREATE TABLE `TankType` (
 -- Tabellenstruktur für Tabelle `Tanks`
 --
 --
-
 DROP TABLE IF EXISTS `Tanks`;
 CREATE TABLE `Tanks` (
   `TanksID` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -493,6 +479,7 @@ CREATE TABLE `Tanks` (
 -- Indizes für die Tabelle `Accessories`
 --
 ALTER TABLE `Accessories`
+  ADD UNIQUE KEY `Accessories` (`Accessories`),
   ADD UNIQUE KEY `FileName` (`FileName`);
 
 --
@@ -517,13 +504,15 @@ ALTER TABLE `Activity`
 -- Indizes für die Tabelle `Association`
 --
 ALTER TABLE `Association`
-  ADD UNIQUE KEY `FileName` (`FileName`);
+  ADD UNIQUE KEY `FileName` (`FileName`),
+  ADD UNIQUE KEY `Association` (`Association`, `ShortAssociation`);
   
 --
 -- Indizes für die Tabelle `Country`
 --
 ALTER TABLE `Country`
-  ADD UNIQUE KEY `FileName` (`FileName`);
+  ADD UNIQUE KEY `FileName` (`FileName`),
+  ADD UNIQUE KEY `CountryName` (`Country`);
     
 --
 -- Indizes für die Tabelle `DiveSite`
@@ -539,7 +528,7 @@ ALTER TABLE `DiveSite`
 ALTER TABLE `Diver`
   ADD KEY `Country` (`Country`),
   ADD UNIQUE KEY `Username` (`Username`),
-  ADD UNIQUE KEY `FileName` (`FileName`);;
+  ADD UNIQUE KEY `FileName` (`FileName`);
 
   
 --
@@ -587,7 +576,8 @@ ALTER TABLE `MedicalCertificate`
 -- Indizes für die Tabelle `Qualification`
 --
 ALTER TABLE `Qualification`
-  ADD KEY `Association` (`Association`);
+  ADD KEY `Association` (`Association`),
+  ADD UNIQUE KEY `AssociationQualification` (`QualificationID`, `Association`);
 
 --
 -- Indizes für die Tabelle `Suite`
