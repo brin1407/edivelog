@@ -1,15 +1,14 @@
--- Was fehlt noch in der Datenbank:
--- Dive > Tauchgangsbestätigung Buddy
--- Hash-Werte für einzelne Datensätze
-
+-- Change:
+-- - Delete Columns TimeCreate and TimeUpdate from all tables
+-- - Insert Column Hash into all tables
 
 -- --------------------------------------------------------
 --
 -- Datenbank: `edivelog`
 --
-DROP DATABASE IF EXISTS `edivelog`;
-CREATE DATABASE IF NOT EXISTS `edivelog` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_mysql500_ci;
-USE `edivelog`;
+DROP DATABASE IF EXISTS `edivelog_de`;
+CREATE DATABASE IF NOT EXISTS `edivelog_de` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_mysql500_ci;
+USE `edivelog_de`;
 
 -- --------------------------------------------------------
 --
@@ -26,9 +25,8 @@ CREATE TABLE `Accessories` (
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchzubehör';
 
@@ -47,9 +45,8 @@ CREATE TABLE `AccessoriesDive` (
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchzubehör Tauchgang';
 
@@ -68,9 +65,8 @@ CREATE TABLE `Activity` (
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Aktivitäten des Tauchgangs';
 
@@ -90,9 +86,8 @@ CREATE TABLE `ActivityDive` (
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Aktivitäten Tauchgang';
 
@@ -114,9 +109,8 @@ CREATE TABLE `Association` (
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Verbände der Sporttaucher';
 
@@ -136,9 +130,8 @@ CREATE TABLE `Country` (
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Länder und LänderCodes';
 
@@ -174,9 +167,8 @@ CREATE TABLE `Dive` (
   `isCheckedOut` BOOLEAN DEFAULT false COMMENT 'Datensatz in Bearbeitung',
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Was wurde zuletzt mit dem Datensatz gemacht',
   `isInvalid` BOOLEAN Default false COMMENT 'Ist der Datensatz ungültig',
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstelltimestamp des Datensatzes',
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updatetimestamp des Datensatzes',
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT 'Benutzer, welcher den Datensatz bearbeitet hat',
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL   COMMENT 'Zähler, wie oft Datensatz bearbeitet wurde'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchgang eines Tauchers';
 
@@ -203,9 +195,8 @@ CREATE TABLE `DiveSite` (
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchplätze';
 
@@ -239,9 +230,8 @@ CREATE TABLE `Diver` (
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
   `isRegistred` BOOLEAN DEFAULT FALSE COMMENT 'Account bestätigt',
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Taucherinformationen';
 
@@ -261,9 +251,8 @@ CREATE TABLE `DiverDive` (
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Aktivitäten Tauchgang';
 
@@ -287,9 +276,8 @@ CREATE TABLE `DiverQualification` (
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Qualifikationen eines Tauchers';
 
@@ -309,9 +297,8 @@ CREATE TABLE `Footlets` (
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Zubehör: Füßlinge';
 
@@ -330,9 +317,8 @@ CREATE TABLE `Gloves` (
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Zubehör: Handschuhe';
 
@@ -353,9 +339,8 @@ CREATE TABLE `Jacket` (
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tarierjacket';
 
@@ -379,9 +364,8 @@ CREATE TABLE `MedicalCertificate` (
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchtauglichkeitsuntersuchung';
 
@@ -401,9 +385,8 @@ CREATE TABLE `Qualification` (
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Qualifikationsübersicht';
 
@@ -423,9 +406,8 @@ CREATE TABLE `Suite` (
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchanzüge';
 
@@ -444,9 +426,8 @@ CREATE TABLE `TankType` (
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Material, aus dem die Tauchflasche besteht';
 
@@ -469,9 +450,8 @@ CREATE TABLE `Tanks` (
   `isCheckedOut` BOOLEAN DEFAULT false,
   `Action` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `isInvalid` BOOLEAN Default false,
-  `TimeCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TimeUpdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedUser` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  `Hash` VARCHAR(255) DEFAULT NULL COMMENT 'Hashwert',
   `UpdateCount` int(11) DEFAULT 1 NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='Tauchflaschen';
 
