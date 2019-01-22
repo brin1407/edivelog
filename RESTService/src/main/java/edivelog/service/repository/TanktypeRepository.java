@@ -4,8 +4,8 @@
  * File: 		TanktypeRepository.java
  *
  * Created:		Sep 19, 2018
- * Author:		amondruffel (Sophos Technology GmbH)
- * Copyright:	(C) 2018 Sophos Technology GmbH
+ * Author:		amondruffel ()
+ * Copyright:	(C) 2018 
  */
 package edivelog.service.repository;
 
