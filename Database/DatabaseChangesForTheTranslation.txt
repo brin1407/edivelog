@@ -1,0 +1,14 @@
+Product     ProductDetail        Country
+=========   ==================   =========
+ProductId   ProductDetailId      CountryId
+- etc -     ProductId            CountryName
+            CountryId            Language
+            ProductName          - etc -
+            ProductDescription
+            - etc -
+            
+Link: https://stackoverflow.com/questions/929410/what-are-best-practices-for-multi-language-database-design
+
+Translation database
+
+https://stackoverflow.com/questions/26765175/multi-language-database-with-default-fallback/27474681#27474681
